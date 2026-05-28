@@ -9,3 +9,6 @@ extracted/
 .vscode/
 .idea/
 *.swp
+
+# Markdown→HTML preview build scratch
+.build/
