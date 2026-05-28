@@ -1,0 +1,11 @@
+# Source archive and its extracted contents — keep local only
+*.zip
+extracted/
+
+# macOS
+.DS_Store
+
+# Editors
+.vscode/
+.idea/
+*.swp
