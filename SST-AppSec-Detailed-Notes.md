@@ -703,7 +703,7 @@ templates) *and* to keep user input out of the structural channel.
 ---
 
 <a name="x"></a>
-## 9. Cross-cutting — how to attack (or defend) any new bug
+## 8. Cross-cutting — how to attack (or defend) any new bug
 
 A repeatable method that generalises beyond the syllabus:
 
