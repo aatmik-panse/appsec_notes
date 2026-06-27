@@ -1520,6 +1520,26 @@ mark.hit { background: rgba(255,197,61,0.32); color: var(--ink); padding: 0 2px;
     </div>
 
     <div class="nav-grp">
+      <div class="lbl">Identity & access</div>
+      <ul>
+        <li><a href="#auth" data-target="auth"><span class="n">08</span>Auth & JWT<span class="ck"></span></a></li>
+        <li><a href="#authz" data-target="authz"><span class="n">09</span>Authz & crypto<span class="ck"></span></a></li>
+        <li><a href="#csrf" data-target="csrf"><span class="n">10</span>CSRF<span class="ck"></span></a></li>
+      </ul>
+    </div>
+
+    <div class="nav-grp">
+      <div class="lbl">Modern AppSec</div>
+      <ul>
+        <li><a href="#ssrf" data-target="ssrf"><span class="n">11</span>SSRF / logic / race<span class="ck"></span></a></li>
+        <li><a href="#redirect" data-target="redirect"><span class="n">12</span>Open redirect<span class="ck"></span></a></li>
+        <li><a href="#api" data-target="api"><span class="n">13</span>API security<span class="ck"></span></a></li>
+        <li><a href="#cloud" data-target="cloud"><span class="n">14</span>Cloud & containers<span class="ck"></span></a></li>
+        <li><a href="#devsecops" data-target="devsecops"><span class="n">15</span>Code review / DevSecOps<span class="ck"></span></a></li>
+      </ul>
+    </div>
+
+    <div class="nav-grp">
       <div class="lbl">Reference</div>
       <ul>
         <li><a href="#assignment" data-target="assignment"><span class="n">▸</span>Assignment<span class="ck"></span></a></li>
@@ -1565,14 +1585,14 @@ mark.hit { background: rgba(255,197,61,0.32); color: var(--ink); padding: 0 2px;
       <section class="hero">
         <span class="eyebrow"><span class="dot"></span>Application Security · Field manual</span>
         <h1>Application security,<br><em>decoded.</em></h1>
-        <p class="sub">Simplified notes from all seven SST lecture sessions, every PortSwigger lab answer assigned in class, the STRIDE / DREAD reference, and exam flashcards. One page. Searchable. Yours to keep.</p>
+        <p class="sub">Simplified notes from all fifteen SST lecture sessions, every PortSwigger lab answer assigned in class, the STRIDE / DREAD reference, and exam flashcards. One page. Searchable. Yours to keep.</p>
         <div class="cta">
           <a href="#basics" class="btn-primary">Start reading <span class="arr">→</span></a>
           <a href="#portswigger" class="btn-ghost">PortSwigger index</a>
         </div>
 
         <div class="hero-stats">
-          <div class="stat"><div class="n">7</div><div class="l">Lecture sessions</div></div>
+          <div class="stat"><div class="n">15</div><div class="l">Lecture sessions</div></div>
           <div class="stat"><div class="n">30</div><div class="l">PortSwigger topics</div></div>
           <div class="stat"><div class="n">40+</div><div class="l">Lab answers</div></div>
           <div class="stat"><div class="n">14</div><div class="l">Flashcards</div></div>
@@ -1584,8 +1604,8 @@ mark.hit { background: rgba(255,197,61,0.32); color: var(--ink); padding: 0 2px;
         <div class="section-head">
           <div class="info">
             <div class="tag">— The Course</div>
-            <h2>Seven sessions,<br><em>one path.</em></h2>
-            <p class="intro">From "what is appsec?" on day one to "solve this graded blind SQLi lab" by the end. Below is the path, in order. Click any card to jump to the chapter.</p>
+            <h2>Fifteen sessions,<br><em>one path.</em></h2>
+            <p class="intro">From "what is appsec?" on day one to JWT forgery, API abuse and cloud kill-chains by the end. Below is the whole course, in order. Click any card to jump to the chapter.</p>
           </div>
           <button class="btn-mark" data-mark="index"><span class="ck"></span>Mark studied</button>
         </div>
@@ -1598,6 +1618,14 @@ mark.hit { background: rgba(255,197,61,0.32); color: var(--ink); padding: 0 2px;
           <a class="feature-card" href="#cmdi"><div class="n">Session 05</div><h4>Command injection</h4><p>Shell metacharacters, in-band / blind / OOB, DNS exfil via Collaborator.</p><span class="arr">Read</span></a>
           <a class="feature-card" href="#xss"><div class="n">Session 06</div><h4>XSS & clickjacking</h4><p>Reflected, stored, DOM, cookie steal, chained CSRF-via-XSS payload.</p><span class="arr">Read</span></a>
           <a class="feature-card" href="#xxe"><div class="n">Session 07</div><h4>XXE & SSTI</h4><p>External entities, blind XXE over OOB, template-engine RCE fingerprints.</p><span class="arr">Read</span></a>
+          <a class="feature-card" href="#auth"><div class="n">Session 08</div><h4>Authentication & JWT</h4><p>Session vs token, alg:none, weak secrets, alg confusion, claim forgery.</p><span class="arr">Read</span></a>
+          <a class="feature-card" href="#authz"><div class="n">Session 09</div><h4>Authz & cryptography</h4><p>Broken access control, IDOR, priv-esc, hashing vs encryption, salting.</p><span class="arr">Read</span></a>
+          <a class="feature-card" href="#csrf"><div class="n">Session 10</div><h4>CSRF</h4><p>Three conditions, auto-submit POC, SameSite & anti-CSRF tokens.</p><span class="arr">Read</span></a>
+          <a class="feature-card" href="#ssrf"><div class="n">Session 11</div><h4>SSRF, logic & race</h4><p>Metadata SSRF, business-logic abuse, TOCTOU race conditions.</p><span class="arr">Read</span></a>
+          <a class="feature-card" href="#redirect"><div class="n">Session 12</div><h4>Open redirect</h4><p>Redirect params, phishing & OAuth token theft, filter-bypass tricks.</p><span class="arr">Read</span></a>
+          <a class="feature-card" href="#api"><div class="n">Session 13</div><h4>API security</h4><p>OWASP API Top 10 — BOLA, mass assignment, function-level authz.</p><span class="arr">Read</span></a>
+          <a class="feature-card" href="#cloud"><div class="n">Session 14</div><h4>Cloud & containers</h4><p>Shared responsibility, S3/IAM misconfig, Docker hygiene, zero trust.</p><span class="arr">Read</span></a>
+          <a class="feature-card" href="#devsecops"><div class="n">Session 15</div><h4>Code review & DevSecOps</h4><p>Source→sink, SAST/DAST/SCA, Semgrep, shift-left pipeline gates.</p><span class="arr">Read</span></a>
           <a class="feature-card" href="#assignment"><div class="n">Graded</div><h4>Threat-model brief</h4><p>DFD + STRIDE table — what the marker actually wants.</p><span class="arr">Read</span></a>
         </div>
       </section>
@@ -2248,6 +2276,378 @@ x.send();
         </div>
       </section>
 
+      <!-- ──────────── SESSION 8: AUTH & JWT ──────────── -->
+      <section class="section atm-blue" id="auth" data-search="authentication jwt json web token session cookie alg none weak secret brute force hashcat credential stuffing mfa multi factor session fixation claims signature hs256 rs256 alg confusion kid jku jwk privilege escalation bearer">
+        <div class="section-head">
+          <div class="info">
+            <div class="tag">— Session 08</div>
+            <h2>Authentication<br>& <em>JWT</em>.</h2>
+            <p class="intro">Authentication answers <strong>"who are you?"</strong>. Get it wrong and every other control is moot. JWTs make auth stateless — and introduce a fresh family of bugs because the token, not the server, carries the trust.</p>
+          </div>
+          <button class="btn-mark" data-mark="auth"><span class="ck"></span>Mark studied</button>
+        </div>
+
+        <h3 class="h3">Session vs token.</h3>
+        <table class="kv">
+          <thead><tr><th></th><th>Server session</th><th>JWT token</th></tr></thead>
+          <tbody>
+            <tr><td class="k">State</td><td>Stateful — session stored server-side, cookie holds Session ID</td><td>Stateless — nothing stored server-side</td></tr>
+            <tr><td class="k">Storage</td><td>Server</td><td>Client</td></tr>
+            <tr><td class="k">Revocation</td><td>Easy</td><td>Hard — token is valid until it expires</td></tr>
+          </tbody>
+        </table>
+
+        <h3 class="h3">Authentication bugs → fix.</h3>
+        <table class="kv">
+          <thead><tr><th>Weakness</th><th>Mitigation</th></tr></thead>
+          <tbody>
+            <tr><td class="k">Credentials over plain HTTP</td><td>HTTPS only; transmit via POST, never in the URL</td></tr>
+            <tr><td class="k">No limit on login attempts (brute force / credential stuffing)</td><td>Rate-limit, lockout/backoff, CAPTCHA after N fails</td></tr>
+            <tr><td class="k">Weak credential storage (plaintext, MD5)</td><td>Hash + salt with bcrypt / Argon2 / PBKDF2</td></tr>
+            <tr><td class="k">Verbose errors → username enumeration</td><td>Identical generic error for every failure</td></tr>
+            <tr><td class="k">Session fixation (attacker-set session ID)</td><td>Regenerate the session ID on login</td></tr>
+            <tr><td class="k">Default credentials</td><td>Force change on first use; remove defaults</td></tr>
+          </tbody>
+        </table>
+
+        <h3 class="h3">JWT — <code class="i">Header.Payload.Signature</code>.</h3>
+        <div class="code-window">
+          <div class="code-chrome"><div class="lights"><span class="r"></span><span class="y"></span><span class="g"></span></div><span class="tab">jwt · anatomy</span><button class="copy">Copy</button></div>
+          <pre class="code-body"><span class="com"># 1 · Header  — metadata, Base64</span>
+{ <span class="str">"alg"</span>:<span class="str">"HS256"</span>, <span class="str">"typ"</span>:<span class="str">"JWT"</span> }
+<span class="com"># 2 · Payload — claims, Base64 (anyone can decode!)</span>
+{ <span class="str">"sub"</span>:<span class="str">"123"</span>, <span class="str">"role"</span>:<span class="str">"admin"</span>, <span class="str">"exp"</span>:<span class="num">1735689600</span> }
+<span class="com"># 3 · Signature = HMAC( base64(header)+"."+base64(payload), SECRET )</span>
+<span class="com">#     -> proves integrity / that the token wasn't modified</span>
+
+<span class="kw">Authorization:</span> Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjMifQ.abc123</pre>
+        </div>
+        <p><strong>Claims:</strong> <code class="i">iss</code> issuer · <code class="i">sub</code> subject · <code class="i">aud</code> audience · <code class="i">exp</code> expiry · <code class="i">iat</code> issued-at · <code class="i">nbf</code> not-before.</p>
+
+        <h3 class="h3">JWT attacks → fix.</h3>
+        <table class="kv">
+          <thead><tr><th></th><th>Attack</th><th>How</th><th>Fix</th></tr></thead>
+          <tbody>
+            <tr><td class="tag b">1</td><td class="k"><code class="i">alg:none</code> bypass</td><td>Set <code class="i">"alg":"none"</code>, strip the signature — server trusts it</td><td>Whitelist algorithms; reject <code class="i">none</code></td></tr>
+            <tr><td class="tag b">2</td><td class="k">Weak secret</td><td>Guessable HS256 key cracked offline (Hashcat / John)</td><td>256-bit random secret</td></tr>
+            <tr><td class="tag b">3</td><td class="k">Alg confusion</td><td>Switch RS256→HS256, sign with the <em>public</em> key as HMAC secret</td><td>Pin one expected algorithm</td></tr>
+            <tr><td class="tag b">4</td><td class="k"><code class="i">kid</code> / <code class="i">jku</code> / <code class="i">jwk</code> injection</td><td>Point key-id to a path/SQLi or supply attacker key</td><td>Sanitise <code class="i">kid</code>; ignore client keys; allow-list <code class="i">jku</code></td></tr>
+            <tr><td class="tag b">5</td><td class="k">No <code class="i">exp</code> check</td><td>Expired tokens stay valid — session never dies</td><td>Always validate <code class="i">exp</code>, <code class="i">nbf</code>, <code class="i">iat</code></td></tr>
+            <tr><td class="tag b">6</td><td class="k">Privilege escalation</td><td>Change <code class="i">"role":"user"</code>→<code class="i">"admin"</code> when sig unverified</td><td>Verify signature + validate all claims</td></tr>
+          </tbody>
+        </table>
+
+        <div class="callout warn">
+          <span class="ico">!</span>
+          <p><strong>Exam tip.</strong> A JWT is <strong>encoded, not encrypted</strong>. Header and payload are plain Base64 — anyone can read them. What protects a JWT is its <em>signature</em>, not secrecy. Never put passwords, keys or secrets in the payload.</p>
+        </div>
+      </section>
+
+      <!-- ──────────── SESSION 9: AUTHZ & CRYPTO ──────────── -->
+      <section class="section atm-orange" id="authz" data-search="authorization access control broken access control idor insecure direct object reference rbac abac vertical horizontal privilege escalation forced browsing cryptography encoding encryption hashing salt bcrypt argon2 symmetric asymmetric rsa aes md5 sha1 base64 digital signature non repudiation">
+        <div class="section-head">
+          <div class="info">
+            <div class="tag">— Session 09</div>
+            <h2>Authorization<br>& <em>cryptography</em>.</h2>
+            <p class="intro">Authorization answers <strong>"what are you allowed to do?"</strong> — and must be enforced server-side on every request. Broken Access Control is <strong>OWASP #1</strong>. Cryptography is the toolkit that protects the data once you've decided who may touch it.</p>
+          </div>
+          <button class="btn-mark" data-mark="authz"><span class="ck"></span>Mark studied</button>
+        </div>
+
+        <h3 class="h3">IDOR — missing ownership check.</h3>
+        <p>An app exposes an object id and forgets to verify the requester <em>owns</em> it.</p>
+        <div class="code-window">
+          <div class="code-chrome"><div class="lights"><span class="r"></span><span class="y"></span><span class="g"></span></div><span class="tab">python · idor</span><button class="copy">Copy</button></div>
+          <pre class="code-body"><span class="com"># /invoice?id=1001  ->  attacker tries id=1002  (200 OK)</span>
+<span class="com"># VULNERABLE — checks existence, not ownership</span>
+invoice = Invoice.get(id)
+<span class="kw">return</span> invoice
+
+<span class="com"># SECURE — verify ownership</span>
+<span class="kw">if</span> invoice.owner != current_user:
+    deny_access()</pre>
+        </div>
+
+        <h3 class="h3">Privilege escalation.</h3>
+        <table class="kv">
+          <thead><tr><th>Type</th><th>Meaning</th><th>Example</th></tr></thead>
+          <tbody>
+            <tr><td class="tag o">Vertical</td><td class="k">Gain a higher role</td><td>Normal user reaches <code class="i">/admin/deleteUser</code> → should be 403</td></tr>
+            <tr><td class="tag o">Horizontal</td><td class="k">Reach a same-level user's data</td><td>Read another customer's invoice / profile</td></tr>
+          </tbody>
+        </table>
+        <p><strong>Authorization test checklist:</strong> change IDs · change roles · hit admin URLs (forced browsing) · access other users' resources · tamper API requests · probe hidden functionality.</p>
+
+        <h3 class="h3">Encoding ≠ encryption ≠ hashing.</h3>
+        <table class="kv">
+          <thead><tr><th>Concept</th><th>Purpose</th><th>Reversible?</th></tr></thead>
+          <tbody>
+            <tr><td class="k">Encoding (Base64)</td><td>Representation / transport</td><td>Yes, trivially</td></tr>
+            <tr><td class="k">Encryption (AES, RSA)</td><td>Confidentiality</td><td>Yes, with the key</td></tr>
+            <tr><td class="k">Hashing (bcrypt, SHA-256)</td><td>Integrity / password storage</td><td><strong>No — one-way</strong></td></tr>
+          </tbody>
+        </table>
+        <ul class="bullet">
+          <li><strong>Symmetric</strong> (AES) — same key encrypts and decrypts. <strong>Asymmetric</strong> (RSA) — public encrypts, private decrypts.</li>
+          <li><strong>Digital signature</strong> — sign with private key, verify with public → integrity + authenticity + non-repudiation. Used in HTTPS, certs, JWT RS256.</li>
+          <li><strong>Password storage:</strong> never plaintext or Base64. Use <strong>bcrypt / Argon2 / PBKDF2</strong> — slow and <strong>salted</strong> (salt defeats rainbow tables).</li>
+          <li><strong>Avoid:</strong> MD5 and SHA-1 (broken), ECB mode, hardcoded keys.</li>
+        </ul>
+
+        <div class="callout tip">
+          <span class="ico">✓</span>
+          <p><strong>Exam tip.</strong> Base64 is <strong>not</strong> encryption. <em>Authentication</em> = proving Alice is Alice; <em>authorization</em> = deciding whether Alice may open the admin panel. Broken Access Control = a missing authorization check.</p>
+        </div>
+      </section>
+
+      <!-- ──────────── SESSION 10: CSRF ──────────── -->
+      <section class="section atm-red" id="csrf" data-search="csrf cross site request forgery samesite cookie anti-csrf token origin referer poc auto submit form state changing action session cookie">
+        <div class="section-head">
+          <div class="info">
+            <div class="tag">— Session 10</div>
+            <h2>Cross-site<br>request <em>forgery</em>.</h2>
+            <p class="intro">CSRF makes an authenticated victim's browser fire a state-changing request <strong>they never intended</strong>. The browser auto-attaches the session cookie, so the server thinks it's genuine.</p>
+          </div>
+          <button class="btn-mark" data-mark="csrf"><span class="ck"></span>Mark studied</button>
+        </div>
+
+        <h3 class="h3">Three conditions to exploit.</h3>
+        <table class="kv">
+          <tbody>
+            <tr><td class="k">Relevant action</td><td>Something worth forging — change email/password, transfer money.</td></tr>
+            <tr><td class="k">Cookie-based session</td><td>Session identified only by a cookie the browser sends automatically.</td></tr>
+            <tr><td class="k">No unpredictable parameter</td><td>No anti-CSRF token the attacker can't guess.</td></tr>
+          </tbody>
+        </table>
+
+        <h3 class="h3">Proof of concept — auto-submitting form.</h3>
+        <div class="code-window">
+          <div class="code-chrome"><div class="lights"><span class="r"></span><span class="y"></span><span class="g"></span></div><span class="tab">html · csrf-poc</span><button class="copy">Copy</button></div>
+          <pre class="code-body"><span class="kw">&lt;form</span> action=<span class="str">"https://bank.com/email/change/"</span> method=<span class="str">"POST"</span>
+      target=<span class="str">"csrf-iframe"</span> id=<span class="str">"csrf-form"</span><span class="kw">&gt;</span>
+  <span class="kw">&lt;input</span> type=<span class="str">"hidden"</span> name=<span class="str">"email"</span> value=<span class="str">"attacker@evil.com"</span><span class="kw">&gt;</span>
+<span class="kw">&lt;/form&gt;</span>
+<span class="kw">&lt;iframe</span> style=<span class="str">"display:none"</span> name=<span class="str">"csrf-iframe"</span><span class="kw">&gt;&lt;/iframe&gt;</span>
+<span class="kw">&lt;script&gt;</span>document.getElementById(<span class="str">"csrf-form"</span>).submit()<span class="kw">&lt;/script&gt;</span></pre>
+        </div>
+        <p>Victim (logged into bank.com) opens the attacker page → the hidden form auto-submits with the victim's session cookie → email changed. They only ever see "Hello World".</p>
+
+        <h3 class="h3">Defenses.</h3>
+        <ul class="bullet">
+          <li><strong>Anti-CSRF token</strong> — unpredictable, per-session, validated before the action. If absent, <strong>reject the request</strong>.</li>
+          <li><strong>SameSite cookies</strong> — <code class="i">Strict</code> or <code class="i">Lax</code> stop cross-site sends.</li>
+          <li><strong>Check Origin / Referer</strong>; require a custom header attacker JS can't set; re-authenticate sensitive actions.</li>
+        </ul>
+        <div class="callout warn">
+          <span class="ico">!</span>
+          <p><strong>Exam tip.</strong> Never use <strong>GET</strong> for state-changing actions. Tokens must not ride in the URL or in cookies, and must be validated regardless of method or content-type. If switching POST→GET still works, it's vulnerable.</p>
+        </div>
+      </section>
+
+      <!-- ──────────── SESSION 11: SSRF / LOGIC / RACE ──────────── -->
+      <section class="section atm-green" id="ssrf" data-search="ssrf server side request forgery metadata 169.254.169.254 iam credentials business logic negative quantity price manipulation coupon abuse workflow bypass race condition toctou limit overrun atomic transaction database lock turbo intruder">
+        <div class="section-head">
+          <div class="info">
+            <div class="tag">— Session 11</div>
+            <h2>SSRF, logic<br>& <em>race conditions</em>.</h2>
+            <p class="intro">Three bugs that share one theme: the server trusts something it shouldn't — a URL, a workflow assumption, or the order of two requests.</p>
+          </div>
+          <button class="btn-mark" data-mark="ssrf"><span class="ck"></span>Mark studied</button>
+        </div>
+
+        <h3 class="h3">SSRF — make the server fetch for you.</h3>
+        <p>The attacker can't reach internal services — but the server can. Supply a URL and the server requests it.</p>
+        <div class="code-window">
+          <div class="code-chrome"><div class="lights"><span class="r"></span><span class="y"></span><span class="g"></span></div><span class="tab">ssrf · targets</span><button class="copy">Copy</button></div>
+          <pre class="code-body">{ <span class="str">"url"</span>:<span class="str">"http://127.0.0.1:8080/admin"</span> }   <span class="com"># internal admin panel</span>
+{ <span class="str">"url"</span>:<span class="str">"http://169.254.169.254/latest/meta-data/"</span> }  <span class="com"># cloud metadata -> IAM creds</span></pre>
+        </div>
+        <p><strong>Mitigation:</strong> allow-list URLs · block internal ranges (<code class="i">127.0.0.1</code>, <code class="i">10/8</code>, <code class="i">172.16/12</code>, <code class="i">192.168/16</code>) · network segmentation · disable unnecessary outbound requests.</p>
+
+        <h3 class="h3">Business logic flaws.</h3>
+        <table class="kv">
+          <thead><tr><th>Bug</th><th>Example</th></tr></thead>
+          <tbody>
+            <tr><td class="k">Negative quantity</td><td><code class="i">"quantity":-10</code> → negative total</td></tr>
+            <tr><td class="k">Price manipulation</td><td><code class="i">"price":1000</code> → <code class="i">"price":1</code></td></tr>
+            <tr><td class="k">Coupon abuse</td><td>Re-apply <code class="i">WELCOME50</code> until 100% off</td></tr>
+            <tr><td class="k">Workflow bypass</td><td>Skip the payment step, hit order-confirmation directly</td></tr>
+          </tbody>
+        </table>
+
+        <h3 class="h3">Race conditions (TOCTOU).</h3>
+        <p>Two requests run at once and both pass a check that should only allow one. Balance $100, fire two $100 purchases in parallel → <strong>both succeed</strong>. Same trick double-spends coupons, gift cards, withdrawals.</p>
+        <div class="callout info">
+          <span class="ico">▸</span>
+          <p><strong>Trigger &amp; fix.</strong> Fire parallel requests with <strong>Burp Turbo Intruder</strong>. Fix with <strong>atomic transactions / database locks</strong> — "check balance + deduct" must be one indivisible operation. Memorise the cloud metadata IP <code class="i">169.254.169.254</code>.</p>
+        </div>
+      </section>
+
+      <!-- ──────────── SESSION 12: OPEN REDIRECT ──────────── -->
+      <section class="section atm-yellow" id="redirect" data-search="open redirect next return redirect_uri url goto continue phishing oauth token theft filter bypass evil.com whitelist allow list relative path">
+        <div class="section-head">
+          <div class="info">
+            <div class="tag">— Session 12</div>
+            <h2>Open <em>redirect</em>.</h2>
+            <p class="intro">The app redirects to a URL it took from user input without checking the destination. Small bug, big lever — it powers convincing phishing and OAuth token theft.</p>
+          </div>
+          <button class="btn-mark" data-mark="redirect"><span class="ck"></span>Mark studied</button>
+        </div>
+
+        <h3 class="h3">Where it lives.</h3>
+        <p>After login, logout, password reset, OAuth, checkout. Watch these params: <code class="i">next</code> · <code class="i">return</code> · <code class="i">redirect</code> · <code class="i">url</code> · <code class="i">goto</code> · <code class="i">continue</code> · <code class="i">callback</code> · <code class="i">redirect_uri</code>.</p>
+        <div class="code-window">
+          <div class="code-chrome"><div class="lights"><span class="r"></span><span class="y"></span><span class="g"></span></div><span class="tab">flask · vulnerable</span><button class="copy">Copy</button></div>
+          <pre class="code-body"><span class="kw">@app.route</span>(<span class="str">"/redirect"</span>)
+<span class="kw">def</span> r():
+    url = request.args.get(<span class="str">"url"</span>)
+    <span class="kw">return</span> redirect(url)   <span class="com"># no validation — user controls destination</span></pre>
+        </div>
+
+        <h3 class="h3">Attack vectors.</h3>
+        <ul class="bullet">
+          <li><strong>Phishing.</strong> <code class="i">company.com/redirect?url=evil.com</code> — the trusted domain bounces the victim to a fake login.</li>
+          <li><strong>OAuth token theft.</strong> Tamper <code class="i">redirect_uri</code> so the access token lands on the attacker's host.</li>
+          <li><strong>Filter bypass.</strong> A check that blocks <code class="i">https://evil.com</code> may allow <code class="i">//evil.com</code>, <code class="i">////evil.com</code>, or <code class="i">https://evil.com\@trusted.com</code>.</li>
+        </ul>
+        <div class="callout tip">
+          <span class="ico">✓</span>
+          <p><strong>Prevention.</strong> Allow-list trusted destinations; prefer <strong>relative paths</strong> (<code class="i">/dashboard</code>) only; never redirect to a raw user-controlled URL. A <code class="i">302</code> to your own host confirms the bug.</p>
+        </div>
+      </section>
+
+      <!-- ──────────── SESSION 13: API SECURITY ──────────── -->
+      <section class="section atm-blue" id="api" data-search="api security owasp api top 10 bola broken object level authorization idor mass assignment excessive data exposure rate limiting bopla function level authorization ssrf security misconfiguration inventory management swagger openapi options param miner rest graphql">
+        <div class="section-head">
+          <div class="info">
+            <div class="tag">— Session 13</div>
+            <h2>API <em>security</em>.</h2>
+            <p class="intro">Modern apps are API-driven — the website is just UI, the API is the real functionality. Most API bugs share one root cause: <strong>the server trusts client-supplied parameters</strong> without authorising them.</p>
+          </div>
+          <button class="btn-mark" data-mark="api"><span class="ck"></span>Mark studied</button>
+        </div>
+
+        <h3 class="h3">Recon.</h3>
+        <ul class="bullet">
+          <li>Find endpoints in JS (<code class="i">fetch("/api/...")</code>), DevTools Network, Swagger/OpenAPI docs, mobile apps.</li>
+          <li>Send <code class="i">OPTIONS</code> to reveal allowed methods; note content-types (JSON/XML/multipart → different parsers, different bugs).</li>
+          <li>Tools: Burp Proxy to capture, Intruder to fuzz, <strong>Param Miner</strong> for hidden params like <code class="i">isAdmin</code>/<code class="i">debug</code>.</li>
+        </ul>
+
+        <h3 class="h3">OWASP API Top 10 (2023).</h3>
+        <table class="kv">
+          <thead><tr><th>#</th><th>Risk</th><th>Meaning · example</th></tr></thead>
+          <tbody>
+            <tr><td class="tag b">API1</td><td class="k">Broken Object Level Auth (BOLA)</td><td>Missing ownership check — <code class="i">/api/user/123</code>→<code class="i">100</code>. The big one (= IDOR).</td></tr>
+            <tr><td class="tag b">API2</td><td class="k">Broken Authentication</td><td>Weak JWT / predictable tokens / session fixation.</td></tr>
+            <tr><td class="tag b">API3</td><td class="k">Broken Object Property Level Auth</td><td>Mass assignment (add <code class="i">"isAdmin":true</code>) + excessive data exposure.</td></tr>
+            <tr><td class="tag b">API4</td><td class="k">Unrestricted Resource Consumption</td><td>No rate/size limits → DoS, cost abuse.</td></tr>
+            <tr><td class="tag b">API5</td><td class="k">Broken Function Level Auth</td><td>Normal user calls an admin function and it works.</td></tr>
+            <tr><td class="tag b">API6</td><td class="k">Sensitive Business Flow Abuse</td><td>Automating a legitimate flow (coupon spam, scalping).</td></tr>
+            <tr><td class="tag b">API7</td><td class="k">SSRF</td><td>API fetches an attacker-supplied URL.</td></tr>
+            <tr><td class="tag b">API8</td><td class="k">Security Misconfiguration</td><td>Debug on, defaults, verbose errors, missing headers.</td></tr>
+            <tr><td class="tag b">API9</td><td class="k">Improper Inventory Management</td><td>Old <code class="i">/api/v1/</code> still live and unsecured.</td></tr>
+            <tr><td class="tag b">API10</td><td class="k">Unsafe Consumption of APIs</td><td>Trusting third-party API data without validation.</td></tr>
+          </tbody>
+        </table>
+        <div class="callout info">
+          <span class="ico">▸</span>
+          <p><strong>Exam tip.</strong> Root cause across the list: developers trust client parameters without authorisation. <strong>BOLA/API1 is the most common</strong> — always test object ids for ownership, and read API responses (they leak more than the UI shows).</p>
+        </div>
+      </section>
+
+      <!-- ──────────── SESSION 14: CLOUD & CONTAINERS ──────────── -->
+      <section class="section atm-green" id="cloud" data-search="cloud container architecture security shared responsibility iaas paas saas s3 bucket iam least privilege metadata 169.254.169.254 docker image non root secrets trivy grype clair defense in depth network segmentation zero trust kubernetes privileged docker socket">
+        <div class="section-head">
+          <div class="info">
+            <div class="tag">— Session 14</div>
+            <h2>Cloud, containers<br>& <em>architecture</em>.</h2>
+            <p class="intro">Renting compute instead of owning it shifts <em>where</em> the bugs live. The provider secures <strong>the cloud</strong>; you secure <strong>what's in it</strong> — and most breaches are misconfiguration, not zero-days.</p>
+          </div>
+          <button class="btn-mark" data-mark="cloud"><span class="ck"></span>Mark studied</button>
+        </div>
+
+        <h3 class="h3">Shared responsibility.</h3>
+        <table class="kv">
+          <thead><tr><th>Model</th><th>You manage</th><th>Example</th></tr></thead>
+          <tbody>
+            <tr><td class="tag g">IaaS</td><td class="k">OS, runtime, apps, data</td><td>EC2, Azure VM</td></tr>
+            <tr><td class="tag g">PaaS</td><td class="k">App code + data only</td><td>App Service, App Engine</td></tr>
+            <tr><td class="tag g">SaaS</td><td class="k">Data &amp; access only</td><td>Office 365, Gmail</td></tr>
+          </tbody>
+        </table>
+
+        <h3 class="h3">Common cloud misconfigurations.</h3>
+        <ul class="bullet">
+          <li><strong>Public S3 bucket</strong> set Public not Private → data leak.</li>
+          <li><strong>Over-broad IAM</strong> (<code class="i">AdministratorAccess</code> for everyone) → fix with least privilege.</li>
+          <li><strong>Hardcoded keys</strong> committed to Git → rotate + use a secrets manager.</li>
+          <li><strong>Metadata + SSRF</strong> → <code class="i">http://169.254.169.254/</code> leaks IAM credentials.</li>
+        </ul>
+
+        <h3 class="h3">Container security.</h3>
+        <table class="kv">
+          <thead><tr><th>Mistake</th><th>Fix</th></tr></thead>
+          <tbody>
+            <tr><td class="k">Running as root</td><td><code class="i">USER appuser</code>; drop capabilities</td></tr>
+            <tr><td class="k">Secrets baked into the image (<code class="i">ENV PASSWORD=</code>)</td><td>Env vars / secret manager</td></tr>
+            <tr><td class="k">Old base image with CVEs</td><td>Minimal, patched base; scan with Trivy / Grype / Clair</td></tr>
+            <tr><td class="k"><code class="i">--privileged</code> / mounted docker socket</td><td>Least privilege; read-only FS; never mount the socket</td></tr>
+          </tbody>
+        </table>
+
+        <div class="callout info">
+          <span class="ico">▸</span>
+          <p><strong>Architecture principles.</strong> Defense in depth · least privilege · network segmentation (no flat network) · <strong>zero trust</strong> — verify every request even from inside. <strong>Exam kill-chain:</strong> SSRF → <code class="i">169.254.169.254</code> → steal IAM creds → pivot.</p>
+        </div>
+      </section>
+
+      <!-- ──────────── SESSION 15: SECURE CODE REVIEW & DEVSECOPS ──────────── -->
+      <section class="section atm-orange" id="devsecops" data-search="secure code review devsecops sast dast sca iast semgrep sonarqube snyk gitleaks trufflehog trivy shift left ci cd pipeline source sink data flow entry point hardcoded secret manual automated review checklist">
+        <div class="section-head">
+          <div class="info">
+            <div class="tag">— Session 15</div>
+            <h2>Secure code review<br>& <em>DevSecOps</em>.</h2>
+            <p class="intro">Find the bug in the source, before it ships. Earlier is cheaper — a finding at commit time costs a fraction of one in production. DevSecOps bakes that check into the pipeline.</p>
+          </div>
+          <button class="btn-mark" data-mark="devsecops"><span class="ck"></span>Mark studied</button>
+        </div>
+
+        <h3 class="h3">The method — source to sink.</h3>
+        <ol class="bullet">
+          <li><strong>Entry points (sources)</strong> — forms, APIs, cookies, headers.</li>
+          <li><strong>Dangerous operations (sinks)</strong> — DB queries, OS commands, file access, HTML render.</li>
+          <li><strong>Trace the data flow</strong> source → sink.</li>
+          <li><strong>Verify validation / encoding</strong> exists on the path.</li>
+        </ol>
+        <p><strong>Grep for sinks:</strong> <code class="i">eval()</code> · <code class="i">exec()</code> · <code class="i">system()</code> · <code class="i">innerHTML</code> · <code class="i">document.write</code> · SQL string concatenation · <code class="i">verify=False</code>. <strong>Grep for secrets:</strong> <code class="i">password=</code> · <code class="i">apikey=</code> · <code class="i">secret=</code> · <code class="i">token=</code>.</p>
+
+        <h3 class="h3">SAST vs DAST vs SCA.</h3>
+        <table class="kv">
+          <thead><tr><th>Type</th><th>Examines</th><th>Tools</th></tr></thead>
+          <tbody>
+            <tr><td class="tag o">SAST</td><td class="k">Source code (app at rest)</td><td>Semgrep, SonarQube, Checkmarx</td></tr>
+            <tr><td class="tag o">DAST</td><td class="k">Running application</td><td>Burp, OWASP ZAP</td></tr>
+            <tr><td class="tag o">SCA</td><td class="k">Dependencies</td><td>Snyk, Dependency-Check</td></tr>
+            <tr><td class="tag o">Secrets</td><td class="k">Repo / commits</td><td>GitLeaks, TruffleHog</td></tr>
+            <tr><td class="tag o">Container</td><td class="k">Docker images</td><td>Trivy, Grype, Clair</td></tr>
+          </tbody>
+        </table>
+
+        <h3 class="h3">Shift-left pipeline.</h3>
+        <div class="code-window">
+          <div class="code-chrome"><div class="lights"><span class="r"></span><span class="y"></span><span class="g"></span></div><span class="tab">ci/cd · security gates</span><button class="copy">Copy</button></div>
+          <pre class="code-body">Commit → <span class="kw">Secrets scan</span> → <span class="kw">SAST</span> → Build
+       → <span class="kw">SCA</span> (deps) → <span class="kw">Container scan</span> → <span class="kw">DAST</span> → Deploy
+<span class="com"># each gate blocks a bad build — bugs fixed before merge</span></pre>
+        </div>
+
+        <div class="callout tip">
+          <span class="ico">✓</span>
+          <p><strong>Exam tip.</strong> SAST = testing the app <em>at rest</em> (source); DAST = testing it <em>running</em>. <strong>Semgrep</strong> is a pattern-based SAST tool. Manual review still wins on <em>logic</em> bugs a scanner can't see — see the graded <a class="link" href="#assignment">Secure Code Review brief</a>.</p>
+        </div>
+      </section>
+
       <!-- ──────────── ASSIGNMENT ──────────── -->
       <section class="section atm-green" id="assignment" data-search="assignment threat model graded dfd stride table excel deliverable component mitigation impact attack vector">
         <div class="section-head">
@@ -2407,7 +2807,7 @@ x.send();
 /* ──── Mark studied + localStorage + progress ──── */
 const STORAGE_KEY = "appsec-notes-studied-v2";
 const studied = new Set(JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]"));
-const tracked = ["basics", "pentest", "threat", "sqli", "cmdi", "xss", "xxe", "assignment", "index"];
+const tracked = ["basics", "pentest", "threat", "sqli", "cmdi", "xss", "xxe", "auth", "authz", "csrf", "ssrf", "redirect", "api", "cloud", "devsecops", "assignment", "index"];
 
 function save() { localStorage.setItem(STORAGE_KEY, JSON.stringify([...studied])); }
 function refresh() {
@@ -2463,7 +2863,12 @@ const titles = {
   index: "Overview", basics: "Session 01 · Basics", pentest: "Session 02 · Pentest",
   threat: "Session 03 · Threat Modeling", sqli: "Session 04 · SQLi",
   cmdi: "Session 05 · Cmd Injection", xss: "Session 06 · XSS",
-  xxe: "Session 07 · XXE / SSTI", assignment: "Assignment",
+  xxe: "Session 07 · XXE / SSTI",
+  auth: "Session 08 · Auth & JWT", authz: "Session 09 · Authz & Crypto",
+  csrf: "Session 10 · CSRF", ssrf: "Session 11 · SSRF / Logic / Race",
+  redirect: "Session 12 · Open Redirect", api: "Session 13 · API Security",
+  cloud: "Session 14 · Cloud & Containers", devsecops: "Session 15 · Code Review / DevSecOps",
+  assignment: "Assignment",
   portswigger: "PortSwigger Index", exam: "Flashcards"
 };
 const spy = new IntersectionObserver((entries) => {

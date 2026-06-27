@@ -1,0 +1,149 @@
+                    
+                    
+┌──────────────────┐
+│ 15 Code Findings │
+└──────────────────┘
+          
+    app.py
+    ❯❱ [1mpython.django.security.injection.code.user-eval.user-eval[0m
+          ❰❰ Blocking ❱❱
+          Found user data in a call to 'eval'. This is extremely dangerous because it can enable an attacker
+          to execute arbitrary remote code on the system. Instead, refactor your code to not use 'eval' and 
+          instead use a safe library for the specific functionality you need.                               
+          Details: https://sg.run/PJDW                                                                      
+                                                                                                            
+          162┆ formula = request.args.get("formula", "1+1")
+          163┆ try:
+          164┆     score = eval(formula)
+          165┆ except Exception as exc:
+          166┆     return jsonify({"error": str(exc)}), 400
+   
+   ❯❯❱ [1mpython.flask.security.injection.user-eval.eval-injection[0m
+          ❰❰ Blocking ❱❱
+          Detected user data flowing into eval. This is code injection and should be avoided.
+          Details: https://sg.run/5QpX                                                       
+                                                                                             
+          164┆ score = eval(formula)
+   
+   ❯❯❱ [1mpython.lang.security.dangerous-system-call.dangerous-system-call[0m
+          ❰❰ Blocking ❱❱
+          Found user-controlled data used in a system call. This could allow a malicious actor to execute    
+          commands. Use the 'subprocess' module instead, which is easier to use without accidentally exposing
+          a command injection vulnerability.                                                                 
+          Details: https://sg.run/k0W7                                                                       
+                                                                                                             
+          191┆ output = os.popen("ping -n 1 " + host).read()
+   
+    ❯❱ [1mpython.flask.security.audit.directly-returned-format-string.directly-returned-format-string[0m
+          ❰❰ Blocking ❱❱
+          Detected Flask route directly returning a formatted string. This is subject to cross-site scripting
+          if user input can reach the string. Consider using the template engine instead and rendering pages 
+          with 'render_template()'.                                                                          
+          Details: https://sg.run/Zv6o                                                                       
+                                                                                                             
+          192┆ return "<pre>" + output + "</pre>"
+   
+    ❯❱ [1mpython.django.security.injection.raw-html-format.raw-html-format[0m
+          ❰❰ Blocking ❱❱
+          Detected user input flowing into a manually constructed HTML string. You may be accidentally       
+          bypassing secure methods of rendering HTML by manually constructing HTML and this could create a   
+          cross-site scripting vulnerability, which could let attackers steal sensitive user data. To be sure
+          this is safe, check that the HTML is rendered safely. Otherwise, use templates                     
+          (`django.shortcuts.render`) which will safely render HTML instead.                                 
+          Details: https://sg.run/oYj1                                                                       
+                                                                                                             
+          192┆ return "<pre>" + output + "</pre>"
+   
+    ❯❱ [1mpython.flask.security.injection.raw-html-concat.raw-html-format[0m
+          ❰❰ Blocking ❱❱
+          Detected user input flowing into a manually constructed HTML string. You may be accidentally       
+          bypassing secure methods of rendering HTML by manually constructing HTML and this could create a   
+          cross-site scripting vulnerability, which could let attackers steal sensitive user data. To be sure
+          this is safe, check that the HTML is rendered safely. Otherwise, use templates                     
+          (`flask.render_template`) which will safely render HTML instead.                                   
+          Details: https://sg.run/Pb7e                                                                       
+                                                                                                             
+          192┆ return "<pre>" + output + "</pre>"
+   
+   ❯❯❱ [1mpython.lang.security.dangerous-system-call.dangerous-system-call[0m
+          ❰❰ Blocking ❱❱
+          Found user-controlled data used in a system call. This could allow a malicious actor to execute    
+          commands. Use the 'subprocess' module instead, which is easier to use without accidentally exposing
+          a command injection vulnerability.                                                                 
+          Details: https://sg.run/k0W7                                                                       
+                                                                                                             
+          203┆ output = os.popen("ping -n 1 " + host).read()
+   
+    ❯❱ [1mpython.flask.security.audit.directly-returned-format-string.directly-returned-format-string[0m
+          ❰❰ Blocking ❱❱
+          Detected Flask route directly returning a formatted string. This is subject to cross-site scripting
+          if user input can reach the string. Consider using the template engine instead and rendering pages 
+          with 'render_template()'.                                                                          
+          Details: https://sg.run/Zv6o                                                                       
+                                                                                                             
+          204┆ return "<pre>" + output + "</pre>"
+   
+    ❯❱ [1mpython.django.security.injection.raw-html-format.raw-html-format[0m
+          ❰❰ Blocking ❱❱
+          Detected user input flowing into a manually constructed HTML string. You may be accidentally       
+          bypassing secure methods of rendering HTML by manually constructing HTML and this could create a   
+          cross-site scripting vulnerability, which could let attackers steal sensitive user data. To be sure
+          this is safe, check that the HTML is rendered safely. Otherwise, use templates                     
+          (`django.shortcuts.render`) which will safely render HTML instead.                                 
+          Details: https://sg.run/oYj1                                                                       
+                                                                                                             
+          204┆ return "<pre>" + output + "</pre>"
+   
+    ❯❱ [1mpython.flask.security.injection.raw-html-concat.raw-html-format[0m
+          ❰❰ Blocking ❱❱
+          Detected user input flowing into a manually constructed HTML string. You may be accidentally       
+          bypassing secure methods of rendering HTML by manually constructing HTML and this could create a   
+          cross-site scripting vulnerability, which could let attackers steal sensitive user data. To be sure
+          this is safe, check that the HTML is rendered safely. Otherwise, use templates                     
+          (`flask.render_template`) which will safely render HTML instead.                                   
+          Details: https://sg.run/Pb7e                                                                       
+                                                                                                             
+          204┆ return "<pre>" + output + "</pre>"
+   
+    ❯❱ [1mpython.flask.security.audit.app-run-param-config.avoid_app_run_with_bad_host[0m
+          ❰❰ Blocking ❱❱
+          Running flask app with host 0.0.0.0 could expose the server publicly.
+          Details: https://sg.run/eLby                                         
+                                                                               
+          220┆ app.run(debug=True, host="0.0.0.0", port=5050)
+   
+    ❯❱ [1mpython.flask.security.audit.debug-enabled.debug-enabled[0m
+          ❰❰ Blocking ❱❱
+          Detected Flask app with debug=True. Do not deploy to production with this flag enabled as it will   
+          leak sensitive information. Instead, consider using Flask configuration variables or setting 'debug'
+          using system environment variables.                                                                 
+          Details: https://sg.run/dKrd                                                                        
+                                                                                                              
+          220┆ app.run(debug=True, host="0.0.0.0", port=5050)
+            
+    utils.py
+    ❯❱ [1mpython.lang.security.insecure-hash-algorithms-md5.insecure-hash-algorithm-md5[0m
+          ❰❰ Blocking ❱❱
+          Detected MD5 hash algorithm which is considered insecure. MD5 is not collision resistant and is
+          therefore not suitable as a cryptographic signature. Use SHA256 or SHA3 instead.               
+          Details: https://sg.run/vYrY                                                                   
+                                                                                                         
+            7┆ return hashlib.md5(password.encode()).hexdigest()
+   
+    ❯❱ [1mpython.lang.security.audit.md5-used-as-password.md5-used-as-password[0m
+          ❰❰ Blocking ❱❱
+          It looks like MD5 is used as a password hash. MD5 is not considered a secure password hash because  
+          it can be cracked by an attacker in a short amount of time. Use a suitable password hashing function
+          such as scrypt. You can use `hashlib.scrypt`.                                                       
+          Details: https://sg.run/5DwD                                                                        
+                                                                                                              
+            7┆ return hashlib.md5(password.encode()).hexdigest()
+   
+    ❯❱ [1mpython.lang.security.insecure-hash-algorithms-md5.insecure-hash-algorithm-md5[0m
+          ❰❰ Blocking ❱❱
+          Detected MD5 hash algorithm which is considered insecure. MD5 is not collision resistant and is
+          therefore not suitable as a cryptographic signature. Use SHA256 or SHA3 instead.               
+          Details: https://sg.run/vYrY                                                                   
+                                                                                                         
+           15┆ return hashlib.md5(data).hexdigest()
+
