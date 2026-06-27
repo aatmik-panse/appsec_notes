@@ -7,10 +7,10 @@
 
 | Field | Details |
 |---|---|
-| Student Name | _________________________ |
-| Roll Number | _________________________ |
-| Batch / Section | _________________________ |
-| Email ID | _________________________ |
+| Student Name | Aatmik Panse |
+| Roll Number | 23BCS10082 |
+| Batch / Section | 2027 Batch |
+| Email ID | aatmik.23bcs10082@sst.scaler.com |
 | Static Analysis Tool Used | Semgrep v1.168.0 (community rule packs: `p/python`, `p/flask`, `p/secrets`, `p/command-injection`, `p/sql-injection`) + manual code review |
 | Review Date | 2026-06-27 |
 
